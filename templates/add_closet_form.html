@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form actions="createcloset" method="POST">
+
+    <div class='create-closet'>
+        CLOSET NAME: 
+            <input type="text" name="closet-name">
+        <br><br>
+    </div>
+
+    <div class='create-closet'>
+        NOTES: <br>
+            <textarea name="notes" cols="50" rows="5" maxlength="250">(Limit 250 characters)
+            </textarea>
+    </div>
+
+    <div>
+        <input type="submit" value="Submit">
+    </div>
+
+</form>
+
+{% endblock %}

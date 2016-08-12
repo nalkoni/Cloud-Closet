@@ -19,6 +19,7 @@ class Closet(db.Model):
 
     closet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     closet_name = db.Column(db.String(200), nullable=False)
+    notes = db.Column(db.String(1000), nullable=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""

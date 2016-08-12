@@ -74,6 +74,32 @@ def uploaded_file(filename):
     return render_template("closet.html")
 
 
+@app.route('/createcloset', methods=['GET'])
+def create_closet():
+    """Creating a new user closet to add to database"""
+
+    return render_template("add_closet_form.html")
+
+
+@app.route('/createcloset', methods=['POST'])
+def closet_created():
+    """adding the closet to the database"""
+
+    closet_name = request.form["closet-name"]
+    notes = request.form["notes"]
+
+    new_closet = Closet(closet_name=closet_name, notes=notes)
+
+    db.session.add(new_closet)
+    db.session.commit()
+
+    flash("%s Closet was added." % closet_name)
+
+    return redirect("/")
+
+
+
+
 
 
 
