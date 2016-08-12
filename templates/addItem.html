@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div id="">
+        <h2 id="">Add Item To Your Closet</h2>
+    </div>
+    <div>
+        <h6>Upload new File</h6>
+        <form action="" method=post enctype=multipart/form-data>
+          <p><input type=file name=file>
+            <br>
+             <input type=submit value=Upload>
+        </form>
+    </div>
+    <br><br>
+    <form action="">
+      <select name="Select your Item Category: ">
+        {% for category in i_categories %}
+        <option value= '{{ category }}' > {{ category }} </option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <input type="submit">
+    </form>
+
+    <br><br>
+
+     <form action="">
+      <select name="Color: ">
+        {% for color in colors %}
+        <option value= '{{ color }}' > {{ color }} </option>
+        {% endfor %}
+      </select>
+    <br><br>  
+      <input type="submit">
+    </form>
+
+    <br><br>
+
+     <form action="">
+      <select name="Size: ">
+        {% for size in sizes %}
+        <option value= '{{ size }}' > {{ size }} </option>
+        {% endfor %}
+      </select>
+      <br><br>
+      <input type="submit">
+    </form>
+
+{% endblock %}
