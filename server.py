@@ -57,11 +57,13 @@ def upload_file():
             return redirect(url_for('uploaded_file',
                                     filename=filename))
     colors = Color.query.order_by('color').all()
-    print colors
+    closets = Closet.query.order_by('closet_name').all()
     i_categories = ICategory.query.order_by('category_name').all()
     sizes = Size.query.filter(Size.gender_id == 2).all()
+    print i_categories
     return render_template("addItem.html",
                             colors=colors,
+                            closets=closets,
                             sizes=sizes,
                             i_categories=i_categories)
 

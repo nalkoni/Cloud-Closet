@@ -13,38 +13,32 @@
         </form>
     </div>
     <br><br>
-    <form action="">
-      <select name="Select your Item Category: ">
-        {% for category in i_categories %}
-        <option value= '{{ category }}' > {{ category }} </option>
+  <form action="">
+      <select name="Closet: ">
+        {% for closet in closets %}
+          <option value= '{{ closet }}' > {{ closet }} </option>
         {% endfor %}
-      </select>
-      <br><br>
-      <input type="submit">
-    </form>
+      </select><br><br>  
+    
+      <select name="Select your Item Category: ">
 
-    <br><br>
-
-     <form action="">
+        {% for category in i_categories %}
+          <option value= '{{ category }}' > {{ category }} </option>
+        {% endfor %}
+      </select><br><br>
+       
       <select name="Color: ">
         {% for color in colors %}
-        <option value= '{{ color }}' > {{ color }} </option>
+          <option value= '{{ color }}' > {{ color }} </option>
         {% endfor %}
-      </select>
-    <br><br>  
-      <input type="submit">
-    </form>
+        </select><br><br>  
 
-    <br><br>
-
-     <form action="">
       <select name="Size: ">
         {% for size in sizes %}
-        <option value= '{{ size }}' > {{ size }} </option>
+          <option value= '{{ size }}' > {{ size }} </option>
         {% endfor %}
-      </select>
-      <br><br>
+      </select><br><br>
       <input type="submit">
-    </form>
+  </form>
 
 {% endblock %}
