@@ -73,10 +73,16 @@ def upload_file():
                             i_categories=i_categories)
 
 
+
+
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     # print filename create a html template show image, have all of the form stuff anything i want user to fill out send it normal way and then send the filename to the datebase 
 
+    # color = request.form[]
+    # closet = request.form[]
+    # size = request.form[]
+    # category_name = request.form[]
     return render_template("closet.html")
 
 
@@ -111,7 +117,6 @@ def all_closets():
 
     closets = Closet.query.order_by(Closet.closet_name).all()
 
-
     return render_template("closets.html",
                             closets=closets) #in the templates im calling closets closets 
 
@@ -129,15 +134,12 @@ def view_all_closet_items(closet_id):
                             tops=tops,
                             pants=pants)
 
-@app.route('/closetitem', )
-def view_closet_item():
+@app.route('/closetitem/<int:id>', methods=['GET'] )
+def view_closet_item(id):
     """When user clicks closet item it displays more information"""
-    # item_clicked =  request.form[" "]
 
-    # dresses = Dress.query.filter(Dress.) 
-    # tops = Top.query.filter(Top.)
-    # pants =  Pant.query.filter(Pant.)   
-    # movie = Movie.query.get(movie_id)
+
+
 
 
 

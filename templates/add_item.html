@@ -9,31 +9,49 @@
   <form id="" action="" method=post enctype=multipart/form-data>
           <input type=file name=file>
           <br><br>
-  
-      <select name="Closet: ">
+  </div>
+
+  <div class="form-group">
+    <label>Closet: 
+      <select name="closet">
         {% for closet in closets %}
           <option value= '{{ closet }}' > {{ closet }} </option>
         {% endfor %}
-      </select><br><br>  
-    
-      <select name="Select your Item Category: ">
+      </select><br><br>
+    </label>
+  </div> 
+
+  <div class="form-group">
+    <label>Select your Item Category: 
+      <select name="category">
 
         {% for category in i_categories %}
           <option value= '{{ category }}' > {{ category }} </option>
         {% endfor %}
       </select><br><br>
-       
-      <select name="Color: ">
+    </label>
+  </div>
+
+  <div class="form-group"> 
+    <label>Color: 
+      <select name="color">
         {% for color in colors %}
           <option value= '{{ color }}' > {{ color }} </option>
         {% endfor %}
-        </select><br><br>  
+        </select><br><br>
+    </label>
+  </div>  
 
-      <select name="Size: ">
+  <div class="form-group">
+    <label>Size: 
+      <select name="size">
         {% for size in sizes %}
           <option value= '{{ size }}' > {{ size }} </option>
         {% endfor %}
       </select><br><br>
+    </label>
+  </div>
+
       <input type=submit value=Upload>
   </form>
 
