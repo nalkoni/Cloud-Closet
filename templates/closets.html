@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for closet in closets %}
+    <li>
+      <a href="/viewcloset/{{ closet.closet_id }}">{{ closet.closet_name }}</a>
+    </li>
+  {% endfor %}
+ 
+    
+{% endblock %}

@@ -46,21 +46,26 @@ def upload_file():
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
+        print "File:%s" % (file)
         # if user does not select file, browser also
         # submit a empty part without filename
+
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
+
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file',
                                     filename=filename))
+    
+
     colors = Color.query.order_by('color').all()
     closets = Closet.query.order_by('closet_name').all()
     i_categories = ICategory.query.order_by('category_name').all()
     sizes = Size.query.filter(Size.gender_id == 2).all()
-    print i_categories
+                                                    
     return render_template("addItem.html",
                             colors=colors,
                             closets=closets,
@@ -71,8 +76,7 @@ def upload_file():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     # print filename create a html template show image, have all of the form stuff anything i want user to fill out send it normal way and then send the filename to the datebase 
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+
     return render_template("closet.html")
 
 
@@ -99,12 +103,6 @@ def closet_created():
 
     return redirect("/")
 
-@app.route('/viewclosetitems', methods=['POST'])
-def view_all_closet_items():
-    """Displays all items in closet"""
-
-
-    return render_template("closet_view.html")
 
 
 @app.route('/closetitem', )
@@ -122,22 +120,29 @@ def view_closet_item():
     return render_template("closet_item.html")
 
 
+@app.route('/closets')
+def all_closets():
+    """All closets"""
+
+    closets = Closet.query.order_by(Closet.closet_name).all()
 
 
+    return render_template("closets.html",
+                            closets=closets) #in the templates im calling closets closets 
 
 
+@app.route('/viewcloset/<int:id>')
+def view_all_closet_items(id):
+    """Displays all items in closet"""
+    # user clicked closet 
+    
+
+    dresses = Dress.query.filter(Dress.closet_id == '').all()
+    tops = Top.query.filter(Top.closet_id == '').all()
+    pants = Pant.query.filter(Pant.closet_id == '')
 
 
-
-
-
-
-
-
-
-
-
-
+    return render_template("closet_view.html")
 
 
 
