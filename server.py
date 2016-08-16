@@ -66,7 +66,7 @@ def upload_file():
     i_categories = ICategory.query.order_by('category_name').all()
     sizes = Size.query.filter(Size.gender_id == 2).all()
                                                     
-    return render_template("addItem.html",
+    return render_template("add_item.html",
                             colors=colors,
                             closets=closets,
                             sizes=sizes,
@@ -105,6 +105,30 @@ def closet_created():
 
 
 
+@app.route('/closets')
+def all_closets():
+    """All closets"""
+
+    closets = Closet.query.order_by(Closet.closet_name).all()
+
+
+    return render_template("closets.html",
+                            closets=closets) #in the templates im calling closets closets 
+
+
+@app.route('/viewcloset/<int:closet_id>', methods=['GET'])
+def view_all_closet_items(closet_id):
+    """Displays all items in closet"""
+    # user clicked closet
+    dresses = Dress.query.filter(Dress.closet_id == closet_id).all()
+    tops = Top.query.filter(Top.closet_id == closet_id).all()
+    pants = Pant.query.filter(Pant.closet_id == closet_id).all()
+
+    return render_template("view_closet.html",
+                            dresses=dresses,
+                            tops=tops,
+                            pants=pants)
+
 @app.route('/closetitem', )
 def view_closet_item():
     """When user clicks closet item it displays more information"""
@@ -118,32 +142,6 @@ def view_closet_item():
 
 
     return render_template("closet_item.html")
-
-
-@app.route('/closets')
-def all_closets():
-    """All closets"""
-
-    closets = Closet.query.order_by(Closet.closet_name).all()
-
-
-    return render_template("closets.html",
-                            closets=closets) #in the templates im calling closets closets 
-
-
-@app.route('/viewcloset/<int:id>')
-def view_all_closet_items(id):
-    """Displays all items in closet"""
-    # user clicked closet 
-    
-
-    dresses = Dress.query.filter(Dress.closet_id == '').all()
-    tops = Top.query.filter(Top.closet_id == '').all()
-    pants = Pant.query.filter(Pant.closet_id == '')
-
-
-    return render_template("closet_view.html")
-
 
 
 

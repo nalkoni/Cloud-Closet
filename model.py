@@ -98,7 +98,7 @@ class Dress(db.Model):
     i_category_id = db.Column(db.Integer, db.ForeignKey('i_categories.i_category_id'))
     size_id = db.Column(db.Integer, db.ForeignKey('sizes.size_id'))
     color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
-    d_picture = db.Column(db.String, nullable=True)
+    # d_image_filepath = db.Column(db.String, nullable=True)
 
     # Define relationship to closet
     closet = db.relationship("Closet",
@@ -127,6 +127,7 @@ class Top(db.Model):
     i_category_id = db.Column(db.Integer, db.ForeignKey('i_categories.i_category_id'))
     size_id = db.Column(db.Integer, db.ForeignKey('sizes.size_id'))
     color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
+    # d_image_filepath = db.Column(db.String, nullable=True)
 
     # Define relationship to closet
     closet = db.relationship("Closet",
@@ -155,6 +156,7 @@ class Pant(db.Model):
     i_category_id = db.Column(db.Integer, db.ForeignKey('i_categories.i_category_id'))
     size_id = db.Column(db.Integer, db.ForeignKey('sizes.size_id'))
     color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
+    # d_image_filepath = db.Column(db.String, nullable=True)
 
     # Define relationship to closet
     closet = db.relationship("Closet",

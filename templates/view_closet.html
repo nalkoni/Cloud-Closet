@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% for dress in dresses %}
+    <li>
+      <a href="/viewitem/{{ dress.dress_id }}">{{ dress.dress_id }}</a>
+    </li>
+  {% endfor %}
+
+  {% for top in tops %}
+    <li>
+      <a href="/viewitem/{{ top.top_id}}">{{ top.top_id }}</a>
+    </li>
+  {% endfor %}
+
+  {% for pant in pants %}
+    <li>
+      <a href="/viewitem/{{ pant.pant_id }}">{{ pant.pant_id }}</a>
+    </li>
+  {% endfor %}
+{% endblock %}
+
+<!-- Will need to chance pant_id, top_id, dress_id to image so shows images! -->
