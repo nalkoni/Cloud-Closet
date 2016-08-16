@@ -99,6 +99,31 @@ def closet_created():
 
     return redirect("/")
 
+@app.route('/viewclosetitems', methods=['POST'])
+def view_all_closet_items():
+    """Displays all items in closet"""
+
+
+    return render_template("closet_view.html")
+
+
+@app.route('/closetitem', )
+def view_closet_item():
+    """When user clicks closet item it displays more information"""
+    # item_clicked =  request.form[" "]
+
+    # dresses = Dress.query.filter(Dress.) 
+    # tops = Top.query.filter(Top.)
+    # pants =  Pant.query.filter(Pant.)   
+    # movie = Movie.query.get(movie_id)
+
+
+
+    return render_template("closet_item.html")
+
+
+
+
 
 
 
