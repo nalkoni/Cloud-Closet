@@ -54,10 +54,8 @@ def upload_file():
 
 
 
-
 @app.route('/uploads', methods=['POST'])
 def uploaded_file():
-    # print filename create a html template show image, have all of the form stuff anything i want user to fill out send it normal way and then send the filename to the datebase 
    
     # check if the post request has the file part
     if 'file' not in request.files:
@@ -76,33 +74,30 @@ def uploaded_file():
     if uploaded_file and allowed_file(uploaded_file.filename):
         filename = secure_filename(uploaded_file.filename)
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # return redirect(url_for('uploaded_file',
-        #                         filename=filename))
 
 
-    print "got to here!"
+    image_path = "/static/images/" + filename
+    print image_path
 
     color = request.form.get('color')
     closet = request.form.get('closet')
     size = request.form.get('size')
-    category = request.form.get('I_category')
+    category = request.form.get('category')
     notes = request.form.get('notes')
     item_type = request.form.get('item-type')
-    # filename = request.form['file']
-    print filename
 
     if item_type == 'dress':
-        new_dress = Dress(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color)
+        new_dress = Dress(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, d_image_filepath=image_path)
         db.session.add(new_dress)
         db.session.commit()
 
     if item_type == 'top':
-        new_top = Top(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color)
+        new_top = Top(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, t_image_filepath=image_path)
         db.session.add(new_top)
         db.session.commit()
  
     if item_type == 'pants':
-        new_pants = Pant(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color)
+        new_pants = Pant(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, p_image_filepath=image_path)
         db.session.add(new_pants)
         db.session.commit()
 

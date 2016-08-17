@@ -3,19 +3,19 @@
 
 {% for dress in dresses %}
     <li>
-      <a href="/viewitem/{{ dress.dress_id }}">{{ dress.dress_id }}</a>
+     <a href="/viewitem/{{ dress.d_image_filepath}}"><img src= "{{ dress.d_image_filepath }}"></a> 
     </li>
   {% endfor %}
 
   {% for top in tops %}
     <li>
-      <a href="/viewitem/{{ top.top_id}}">{{ top.top_id }}</a>
+      <a href="/viewitem/{{ top.t_image_filepath}}"><img src= "{{ top.t_image_filepath }}"></a>
     </li>
   {% endfor %}
 
   {% for pant in pants %}
     <li>
-      <a href="/viewitem/{{ pant.pant_id }}">{{ pant.pant_id }}</a>
+      <a href="/viewitem/{{ pant.p_image_filepath }}"><img src= "{{ pant.p_image_filepath }}"></a>
     </li>
   {% endfor %}
 {% endblock %}
