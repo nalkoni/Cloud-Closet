@@ -2,55 +2,72 @@
 {% block content %}
 
     <div id="">
-        <h2 id="">Add Item To Your Closet</h2>
+        <h2 id="">Add Item To A Closet</h2>
+        <br>
     </div>
   <div>
         <h6>Upload Item Picture</h6>
-  <form id="" action="" method=post enctype=multipart/form-data>
+  <form id="" action="/uploads" method='POST' enctype='multipart/form-data'>
           <input type=file name=file>
           <br><br>
   </div>
 
   <div class="form-group">
-    <label>Closet: 
+    <label>Item Type:<br> 
+      <select name="item-type">
+          <option value= 'dress'> Dress </option>
+          <option value= 'top'> Top </option>
+          <option value= 'pants'> Pants </option>
+      </select><br><br>
+    </label>
+  </div> 
+
+  <div class="form-group">
+    <label>Closet:<br> 
       <select name="closet">
         {% for closet in closets %}
-          <option value= '{{ closet }}' > {{ closet }} </option>
+          <option value= '{{ closet.closet_id }}' > {{ closet }} </option>
         {% endfor %}
       </select><br><br>
     </label>
   </div> 
 
   <div class="form-group">
-    <label>Select your Item Category: 
+    <label>Select your Item Category:<br>
       <select name="category">
-
         {% for category in i_categories %}
-          <option value= '{{ category }}' > {{ category }} </option>
+          <option value= '{{ category.i_category_id }}' > {{ category }} </option>
         {% endfor %}
       </select><br><br>
     </label>
   </div>
 
   <div class="form-group"> 
-    <label>Color: 
+    <label>Color:<br>
       <select name="color">
         {% for color in colors %}
-          <option value= '{{ color }}' > {{ color }} </option>
+          <option value= '{{ color.color_id }}' > {{ color }} </option>
         {% endfor %}
         </select><br><br>
     </label>
   </div>  
 
   <div class="form-group">
-    <label>Size: 
+    <label>Size:<br> 
       <select name="size">
         {% for size in sizes %}
-          <option value= '{{ size }}' > {{ size }} </option>
+          <option value= '{{ size.size_id }}' > {{ size }} </option>
         {% endfor %}
       </select><br><br>
     </label>
   </div>
+
+    <div class='form-group'>
+      <label>NOTES: <br>
+            <textarea name="notes" cols="50" rows="5" maxlength="250">(Limit 250 characters)
+            </textarea>
+      </label>
+    </div>
 
       <input type=submit value=Upload>
   </form>

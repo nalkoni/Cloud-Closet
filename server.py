@@ -38,28 +38,8 @@ def index():
     return render_template("homepage.html")
 
 
-@app.route('/addItem', methods=['GET', 'POST'])
+@app.route('/addItem')
 def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        print "File:%s" % (file)
-        # if user does not select file, browser also
-        # submit a empty part without filename
-
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
-    
 
     colors = Color.query.order_by('color').all()
     closets = Closet.query.order_by('closet_name').all()
@@ -75,15 +55,58 @@ def upload_file():
 
 
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
+@app.route('/uploads', methods=['POST'])
+def uploaded_file():
     # print filename create a html template show image, have all of the form stuff anything i want user to fill out send it normal way and then send the filename to the datebase 
+   
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        # return redirect(request.url)
 
-    # color = request.form[]
-    # closet = request.form[]
-    # size = request.form[]
-    # category_name = request.form[]
-    return render_template("closet.html")
+    uploaded_file = request.files['file']
+    print "File:%s" % (uploaded_file)
+    # if user does not select file, browser also
+    # submit a empty part without filename
+
+    if uploaded_file.filename == '':
+        flash('No selected file')
+        # return redirect(request.url)
+
+    if uploaded_file and allowed_file(uploaded_file.filename):
+        filename = secure_filename(uploaded_file.filename)
+        uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # return redirect(url_for('uploaded_file',
+        #                         filename=filename))
+
+
+    print "got to here!"
+
+    color = request.form.get('color')
+    closet = request.form.get('closet')
+    size = request.form.get('size')
+    category = request.form.get('I_category')
+    notes = request.form.get('notes')
+    item_type = request.form.get('item-type')
+    # filename = request.form['file']
+    print filename
+
+    if item_type == 'dress':
+        new_dress = Dress(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color)
+        db.session.add(new_dress)
+        db.session.commit()
+
+    if item_type == 'top':
+        new_top = Top(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color)
+        db.session.add(new_top)
+        db.session.commit()
+ 
+    if item_type == 'pants':
+        new_pants = Pant(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color)
+        db.session.add(new_pants)
+        db.session.commit()
+
+    return redirect("/closets")
 
 
 @app.route('/createcloset', methods=['GET'])
@@ -137,7 +160,6 @@ def view_all_closet_items(closet_id):
 @app.route('/closetitem/<int:id>', methods=['GET'] )
 def view_closet_item(id):
     """When user clicks closet item it displays more information"""
-
 
 
 
