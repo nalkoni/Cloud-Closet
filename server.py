@@ -159,15 +159,15 @@ def view_closet_item(id):
     return render_template("closet_item.html")
 
 
-@app.route('/allitems', methods=[''])
+@app.route('/allitems', methods=['GET'])
 def view_all_items():
     """User has option to view all uploaded items regardless of closet"""
-    
+
     dresses = Dress.query.all()
     tops = Top.query.all()
     pants = Pant.query.all()
 
-    return render_template("all_items.html",
+    return render_template("view_all_items.html",
                             dresses=dresses,
                             tops=tops,
                             pants=pants)
