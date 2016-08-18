@@ -34,12 +34,14 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
+    """homepage"""
 
     return render_template("homepage.html")
 
 
 @app.route('/addItem')
 def upload_file():
+    """Form to enter item into closet"""
 
     colors = Color.query.order_by('color').all()
     closets = Closet.query.order_by('closet_name').all()
@@ -56,28 +58,26 @@ def upload_file():
 
 @app.route('/uploads', methods=['POST'])
 def uploaded_file():
+    """Inputs item into closets databases"""
    
     # check if the post request has the file part
     if 'file' not in request.files:
         flash('No file part')
         # return redirect(request.url)
 
-    uploaded_file = request.files['file']
-    print "File:%s" % (uploaded_file)
+    uploaded_file = request.files.get('file')
     # if user does not select file, browser also
     # submit a empty part without filename
 
     if uploaded_file.filename == '':
         flash('No selected file')
-        # return redirect(request.url)
+        return redirect(request.url)
 
     if uploaded_file and allowed_file(uploaded_file.filename):
         filename = secure_filename(uploaded_file.filename)
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-
     image_path = "/static/images/" + filename
-    print image_path
 
     color = request.form.get('color')
     closet = request.form.get('closet')
@@ -115,8 +115,8 @@ def create_closet():
 def closet_created():
     """adding the closet to the database"""
 
-    closet_name = request.form["closet-name"]
-    notes = request.form["notes"]
+    closet_name = request.form.get("closet-name")
+    notes = request.form.get("notes")
 
     new_closet = Closet(closet_name=closet_name, notes=notes)
 
@@ -126,7 +126,6 @@ def closet_created():
     flash("%s Closet was added." % closet_name)
 
     return redirect("/")
-
 
 
 @app.route('/closets')
@@ -152,20 +151,25 @@ def view_all_closet_items(closet_id):
                             tops=tops,
                             pants=pants)
 
-@app.route('/closetitem/<int:id>', methods=['GET'] )
+
+@app.route('/closetitem/<int:id>', methods=['GET'])
 def view_closet_item(id):
     """When user clicks closet item it displays more information"""
-
-
-
-
 
     return render_template("closet_item.html")
 
 
+@app.route('/allitems', methods=[''])
+def view_all_items():
+    """User has option to view all uploaded items regardless of closet
+
+    """
+    pass
 
 
 
+
+#-----------------------------------------------------------------------------#
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
     # that we invoke the DebugToolbarExtension

@@ -180,15 +180,63 @@ class Pant(db.Model):
         return "<Pant pant_id=%s i_category_id=%s>" % (self.pant_id, self.i_category)
 
 
+def sample_data():
+    """sample data for testing"""
+    
+    # to protect against duplicate data if runs more then once 
+    Closet.query.delete()
+    Gender.query.delete()
+    ICategory.query.delete()
+    Size.query.delete()
+    Color.query.delete()
+    Dress.query.delete()
+    Top.query.delete()
+    Pant.query.delete()
+
+    #add sample data to above Classes(tables)
+    ct = Closet(closet_name='Travel', notes='travel closet')
+    cs = Closet(closet_name='Random', notes='random closet')
+    db.session.flush()
+
+    gf = Gender(gender_name='female')
+    db.session.flush()
+
+    icb = ICategory(category_name='business/work')
+    icf = ICategory(category_name='formal')
+    db.session.flush()
+
+    sxs = Size(size='Regular XXS-XS (00-2)', gender_id=1)
+    sm = Size(size='Regular M (8-10)', gender_id=1)
+    db.session.flush()
+
+    cb = Color(color='blue')
+    cr = Color(color='red')
+    db.session.flush()
+
+    new_dress = Dress(closet_id=1, notes='New dress, possibly for interview', i_category_id=1, size_id=1, color_id=1, d_image_filepath='/static/images/littleblackdress.jpg')
+    floral_dress = Dress(closet_id=2, notes='Sundress bought from Nordstrom', i_category_id=2, size_id=2, color_id=2, d_image_filepath='/static/images/littleblackdress.jpg')
+    db.session.flush()
+
+    new_top = Top(closet_id=1, notes='New top, possibly for interview', i_category_id=1, size_id=1, color_id=1, t_image_filepath='/static/images/littleblackdress.jpg')
+    silky_top = Top(closet_id=2, notes='Has a whole, needs to be fixed', i_category_id=2, size_id=2, color_id=2, t_image_filepath='/static/images/littleblackdress.jpg')
+    db.session.flush()
+
+    new_pants = Pant(closet_id=1, notes='New pants, possibly for interview', i_category_id=1, size_id=1, color_id=1, p_image_filepath='/static/images/littleblackdress.jpg')
+    khaki_pants = Pant(closet_id=2, notes='Have not been altered', i_category_id=2, size_id=2, color_id=2, p_image_filepath='/static/images/littleblackdress.jpg')
+    db.session.flush()
+
+    db.session.add_all([ct, cs, gf, icb, icf, sxs, sm, cb, cr, new_dress, floral_dress, new_top, silky_top, new_pants, khaki_pants])
+    db.session.commit()
+
 
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri="postgresql:///closets"):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///closets'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 #    app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
