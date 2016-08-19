@@ -6,7 +6,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, ses
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.utils import secure_filename
 
-from model import connect_to_db, db, ICategory, Closet, Gender, Size, Color, Dress, Top, Pant
+from model import connect_to_db, db, ICategory, Closet, IType, Gender, Size, Color, Item, Dress, Top, Pant
 
 #file  path to store the uploaded files
 UPLOAD_FOLDER = 'static/images'
@@ -37,71 +37,6 @@ def index():
     """homepage"""
 
     return render_template("homepage.html")
-
-
-@app.route('/addItem')
-def upload_file():
-    """Form to enter item into closet"""
-
-    colors = Color.query.order_by('color').all()
-    closets = Closet.query.order_by('closet_name').all()
-    i_categories = ICategory.query.order_by('category_name').all()
-    sizes = Size.query.filter(Size.gender_id == 2).all()
-                                                    
-    return render_template("add_item.html",
-                            colors=colors,
-                            closets=closets,
-                            sizes=sizes,
-                            i_categories=i_categories)
-
-
-
-@app.route('/uploads', methods=['POST'])
-def uploaded_file():
-    """Inputs item into closets databases"""
-   
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        flash('No file part')
-        # return redirect(request.url)
-
-    uploaded_file = request.files.get('file')
-    # if user does not select file, browser also
-    # submit a empty part without filename
-
-    if uploaded_file.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
-
-    if uploaded_file and allowed_file(uploaded_file.filename):
-        filename = secure_filename(uploaded_file.filename)
-        uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-    image_path = "/static/images/" + filename
-
-    color = request.form.get('color')
-    closet = request.form.get('closet')
-    size = request.form.get('size')
-    category = request.form.get('category')
-    notes = request.form.get('notes')
-    item_type = request.form.get('item-type')
-
-    if item_type == 'dress':
-        new_dress = Dress(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, d_image_filepath=image_path)
-        db.session.add(new_dress)
-        db.session.commit()
-
-    if item_type == 'top':
-        new_top = Top(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, t_image_filepath=image_path)
-        db.session.add(new_top)
-        db.session.commit()
- 
-    if item_type == 'pants':
-        new_pants = Pant(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, p_image_filepath=image_path)
-        db.session.add(new_pants)
-        db.session.commit()
-
-    return redirect("/closets")
 
 
 @app.route('/createcloset', methods=['GET'])
@@ -135,28 +70,88 @@ def all_closets():
     closets = Closet.query.order_by(Closet.closet_name).all()
 
     return render_template("closets.html",
-                            closets=closets) #in the templates im calling closets closets 
+                           closets=closets)
+    #in the templates im calling closets closets
 
 
 @app.route('/viewcloset/<int:closet_id>', methods=['GET'])
 def view_all_closet_items(closet_id):
     """Displays all items in closet"""
     # user clicked closet
-    dresses = Dress.query.filter(Dress.closet_id == closet_id).all()
-    tops = Top.query.filter(Top.closet_id == closet_id).all()
-    pants = Pant.query.filter(Pant.closet_id == closet_id).all()
+    items = Item.query.filter(Item.closet_id == closet_id).all()
 
     return render_template("view_closet.html",
-                            dresses=dresses,
-                            tops=tops,
-                            pants=pants)
+                           items=items)
 
 
-@app.route('/closetitem/<int:id>', methods=['GET'])
-def view_closet_item(id):
-    """When user clicks closet item it displays more information"""
+@app.route('/addItem')
+def upload_file():
+    """Form to enter item into closet"""
 
-    return render_template("closet_item.html")
+    colors = Color.query.order_by('color').all()
+    closets = Closet.query.order_by('closet_name').all()
+    i_categories = ICategory.query.order_by('category_name').all()
+    item_types = IType.query.order_by('type_name').all()
+    sizes = Size.query.filter(Size.gender_id == 2).all()
+
+    return render_template("add_item.html",
+                           colors=colors,
+                           closets=closets,
+                           item_types=item_types,
+                           i_categories=i_categories,
+                           sizes=sizes)
+
+
+@app.route('/uploads', methods=['POST'])
+def uploaded_file():
+    """Inputs item into closets databases"""
+
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        # return redirect(request.url)
+
+    uploaded_file = request.files.get('file')
+    # if user does not select file, browser also
+    # submit a empty part without filename
+
+    if uploaded_file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+
+    if uploaded_file and allowed_file(uploaded_file.filename):
+        filename = secure_filename(uploaded_file.filename)
+        uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    image_path = "/static/images/" + filename
+
+    color = request.form.get('color')
+    closet = request.form.get('closet')
+    size = request.form.get('size')
+    category = request.form.get('category')
+    notes = request.form.get('notes')
+    item_type = request.form.get('item_type')
+    print "got here"
+
+    if item_type == '1':
+        new_dress = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        db.session.add(new_dress)
+        db.session.commit()
+        print "got end"
+
+    if item_type == '2':
+        new_top = Item(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        db.session.add(new_top)
+        db.session.commit()
+        print "got end"
+
+    if item_type == '3':
+        new_pants = Item(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        db.session.add(new_pants)
+        db.session.commit()
+        print "got end"
+
+    return redirect("/closets")
 
 
 @app.route('/allitems', methods=['GET'])
@@ -171,6 +166,13 @@ def view_all_items():
                             dresses=dresses,
                             tops=tops,
                             pants=pants)
+
+
+@app.route('/item_detail/<int:id>', methods=['GET'])
+def view_closet_item(id):
+    """When user clicks closet item it displays more information"""
+
+    return render_template("item_detail.html")
 
 
 

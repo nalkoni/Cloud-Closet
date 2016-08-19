@@ -14,10 +14,10 @@
 
   <div class="form-group">
     <label>Item Type:<br> 
-      <select name="item-type">
-          <option value= 'dress'> Dress </option>
-          <option value= 'top'> Top </option>
-          <option value= 'pants'> Pants </option>
+      <select name="item_type">
+        {% for item_type in item_types %}
+          <option value= '{{ item_type.i_type_id  }}'> {{ item_type }} </option>
+        {% endfor %}
       </select><br><br>
     </label>
   </div> 

@@ -41,6 +41,20 @@ class Gender(db.Model):
         return "%s" % (self.gender_name)
 
 
+class IType(db.Model):
+    """ Types of Items in Closet"""
+
+    __tablename__ = "i_types"
+
+    i_type_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    type_name = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "%s" % (self.type_name)
+
+
 class ICategory(db.Model):
     """Possible item catagories user can choose from to organize closet"""
 
@@ -66,7 +80,7 @@ class Size(db.Model):
 
     # Define relationship to gender
     gender = db.relationship("Gender",
-                           backref=db.backref("sizes"))
+                             backref=db.backref("sizes"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -87,108 +101,97 @@ class Color(db.Model):
 
         return "%s" % (self.color)
 
-class Dress(db.Model):
-    """User's Dresses database"""
 
-    __tablename__ = "dresses"
-    
-    dress_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+class Item(db.Model):
+    """ User's Items in Closet"""
+
+    __tablename__ = "items"
+
+    item_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    i_type_id = db.Column(db.Integer, db.ForeignKey('i_types.i_type_id'))
     closet_id = db.Column(db.Integer, db.ForeignKey('closets.closet_id'))
     notes = db.Column(db.String(1000), nullable=False)
     i_category_id = db.Column(db.Integer, db.ForeignKey('i_categories.i_category_id'))
     size_id = db.Column(db.Integer, db.ForeignKey('sizes.size_id'))
     color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
-    d_image_filepath = db.Column(db.String, nullable=True)
+    image_filepath = db.Column(db.String, nullable=True)
 
     # Define relationship to closet
     closet = db.relationship("Closet",
-                           backref=db.backref("dresses"))
+                             backref=db.backref("items"))
+
+    # Defines relationship to i_types
+    i_type = db.relationship("IType",
+                             backref=db.backref("items"))
 
     # Define relationship to i_category
     i_category = db.relationship("ICategory",
-                            backref=db.backref("dresses"))
+                                 backref=db.backref("items"))
 
     # Define relationship to size
     size = db.relationship("Size",
-                           backref=db.backref("dresses"))
+                           backref=db.backref("items"))
 
     # Define relationship to color
     color = db.relationship("Color",
-                            backref=db.backref("dresses"))
+                            backref=db.backref("items"))
+
+
+class Dress(db.Model):
+    """User's Dresses database"""
+
+    __tablename__ = "dresses"
+
+    dress_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('items.item_id'))
+
+    item = db.relationship("Item",
+                           backref=db.backref("dresses"))
 
 
 class Top(db.Model):
     """User's Tops database"""
 
     __tablename__ = "tops"
+
     top_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    closet_id = db.Column(db.Integer, db.ForeignKey('closets.closet_id'))
-    notes = db.Column(db.String(1000), nullable=False)
-    i_category_id = db.Column(db.Integer, db.ForeignKey('i_categories.i_category_id'))
-    size_id = db.Column(db.Integer, db.ForeignKey('sizes.size_id'))
-    color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
-    t_image_filepath = db.Column(db.String, nullable=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('items.item_id'))
 
-    # Define relationship to closet
-    closet = db.relationship("Closet",
+    item = db.relationship("Item",
                            backref=db.backref("tops"))
-
-    # Define relationship to i_category
-    i_category = db.relationship("ICategory",
-                            backref=db.backref("tops"))
-
-    # Define relationship to size
-    size = db.relationship("Size",
-                           backref=db.backref("tops"))
-
-    # Define relationship to color
-    color = db.relationship("Color",
-                            backref=db.backref("tops"))
 
 
 class Pant(db.Model):
     """User's Pants database"""
 
     __tablename__ = "pants"
+
     pant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    closet_id = db.Column(db.Integer, db.ForeignKey('closets.closet_id'))
-    notes = db.Column(db.String(1000), nullable=False)
-    i_category_id = db.Column(db.Integer, db.ForeignKey('i_categories.i_category_id'))
-    size_id = db.Column(db.Integer, db.ForeignKey('sizes.size_id'))
-    color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
-    p_image_filepath = db.Column(db.String, nullable=True)
+    item_id = db.Column(db.Integer, db.ForeignKey('items.item_id'))
 
-    # Define relationship to closet
-    closet = db.relationship("Closet",
+    item = db.relationship("Item",
                            backref=db.backref("pants"))
-
-    # Define relationship to i_category
-    i_category = db.relationship("ICategory",
-                            backref=db.backref("pants"))
-
-    # Define relationship to size
-    size = db.relationship("Size",
-                           backref=db.backref("pants"))
-
-    # Define relationship to color
-    color = db.relationship("Color",
-                            backref=db.backref("pants"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Pant pant_id=%s i_category_id=%s>" % (self.pant_id, self.i_category)
+        return "<Pant pant_id=%s>" % (self.pant)
+
+#------------------------------------------------------------------------------#
+#Testing Data
 
 
 def sample_data():
     """sample data for testing"""
-    
-    # to protect against duplicate data if runs more then once 
+
+# to protect against duplicate data if runs more then once
     Closet.query.delete()
+    IType.query.delete()
     Gender.query.delete()
     ICategory.query.delete()
     Size.query.delete()
     Color.query.delete()
+    Item.query.delete()
     Dress.query.delete()
     Top.query.delete()
     Pant.query.delete()
@@ -197,6 +200,11 @@ def sample_data():
     ct = Closet(closet_name='Travel', notes='travel closet')
     cs = Closet(closet_name='Random', notes='random closet')
     db.session.flush()
+
+    idress = IType(type_name='Dress')
+    itop = IType(type_name='Top')
+    ipant = IType(type_name='Pant')
+    db.session.flush
 
     gf = Gender(gender_name='female')
     db.session.flush()
@@ -213,19 +221,17 @@ def sample_data():
     cr = Color(color='red')
     db.session.flush()
 
-    new_dress = Dress(closet_id=1, notes='New dress, possibly for interview', i_category_id=1, size_id=1, color_id=1, d_image_filepath='/static/images/littleblackdress.jpg')
-    floral_dress = Dress(closet_id=2, notes='Sundress bought from Nordstrom', i_category_id=2, size_id=2, color_id=2, d_image_filepath='/static/images/littleblackdress.jpg')
+    new_item_dress = Item(i_type_id=1, closet_id=1,  notes='New dress, possibly for interview', i_category_id=1, size_id=1, color_id=1, image_filepath='/static/images/littleblackdress.jpg')
+    new_item_top = Item(i_type_id=2, closet_id=2, notes='New top, possibly for interview', i_category_id=2, size_id=2, color_id=2, image_filepath='/static/images/littleblackdress.jpg')
+    new_item_pant = Item(i_type_id=3, closet_id=1, notes='New pants, possibly for interview', i_category_id=1, size_id=1, color_id=1, image_filepath='/static/images/littleblackdress.jpg')
     db.session.flush()
 
-    new_top = Top(closet_id=1, notes='New top, possibly for interview', i_category_id=1, size_id=1, color_id=1, t_image_filepath='/static/images/littleblackdress.jpg')
-    silky_top = Top(closet_id=2, notes='Has a whole, needs to be fixed', i_category_id=2, size_id=2, color_id=2, t_image_filepath='/static/images/littleblackdress.jpg')
+    new_dress = Dress(item_id=1)
+    new_top = Top(item_id=2)
+    new_pant = Pant(item_id=3)
     db.session.flush()
 
-    new_pants = Pant(closet_id=1, notes='New pants, possibly for interview', i_category_id=1, size_id=1, color_id=1, p_image_filepath='/static/images/littleblackdress.jpg')
-    khaki_pants = Pant(closet_id=2, notes='Have not been altered', i_category_id=2, size_id=2, color_id=2, p_image_filepath='/static/images/littleblackdress.jpg')
-    db.session.flush()
-
-    db.session.add_all([ct, cs, gf, icb, icf, sxs, sm, cb, cr, new_dress, floral_dress, new_top, silky_top, new_pants, khaki_pants])
+    db.session.add_all([ct, cs, idress, itop, ipant, gf, icb, icf, sxs, sm, cb, cr, new_item_dress, new_item_top, new_item_pant, new_dress, new_top, new_pant])
     db.session.commit()
 
 

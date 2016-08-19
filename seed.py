@@ -1,4 +1,4 @@
-from model import connect_to_db, db, Gender, ICategory, Size, Color
+from model import connect_to_db, db, Gender, ICategory, Size, Color, IType
 from server import app
 
 #-----------------------------------------------------------------------------#
@@ -68,6 +68,22 @@ def load_i_categories():
     db.session.commit()
 
 
+def load_item_types():
+    """Loading the item_types from i.types"""
+
+    print "item_types"
+
+    for row in open("seed_data/i.types"):
+        i_type = row.rstrip()
+
+        i_type = IType(type_name=i_type)
+
+        db.session.add(i_type)
+
+    db.session.commit()
+
+#-------------------------------------------------------------------------------
+
 if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
@@ -76,3 +92,4 @@ if __name__ == "__main__":
     load_sizes()
     load_color()
     load_i_categories()
+    load_item_types()
