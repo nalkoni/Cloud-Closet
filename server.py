@@ -131,25 +131,21 @@ def uploaded_file():
     category = request.form.get('category')
     notes = request.form.get('notes')
     item_type = request.form.get('item_type')
-    print "got here"
 
     if item_type == '1':
         new_dress = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
         db.session.add(new_dress)
         db.session.commit()
-        print "got end"
 
     if item_type == '2':
         new_top = Item(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
         db.session.add(new_top)
         db.session.commit()
-        print "got end"
 
     if item_type == '3':
         new_pants = Item(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
         db.session.add(new_pants)
         db.session.commit()
-        print "got end"
 
     return redirect("/closets")
 
@@ -158,14 +154,10 @@ def uploaded_file():
 def view_all_items():
     """User has option to view all uploaded items regardless of closet"""
 
-    dresses = Dress.query.all()
-    tops = Top.query.all()
-    pants = Pant.query.all()
+    items = Item.query.all()
 
     return render_template("view_all_items.html",
-                            dresses=dresses,
-                            tops=tops,
-                            pants=pants)
+                           items=items)
 
 
 @app.route('/item_detail/<int:id>', methods=['GET'])

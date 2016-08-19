@@ -1,25 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h6>Dresses:</h6>
-{% for dress in dresses %}
+<h6>All Items:</h6>
+{% for item in items %}
 
-    <a href="/viewitem/{{ dress.d_image_filepath }}"><img src= "{{ dress.d_image_filepath }}"></a>
-
-{% endfor %}
-
-<h6>Tops:</h6>
-{% for top in tops %}
-
-    <a href="/viewitem/{{ top.t_image_filepath }}"><img src= "{{ top.t_image_filepath }}"></a>
+    <a href="/viewitem/{{ item.image_filepath }}"><img src= "{{ item.image_filepath }}"></a>
 
 {% endfor %}
 
-<h6>Pants:</h6>
-{% for pant in pants %}
 
-    <a href="/viewitem/{{ pant.p_image_filepath }}"><img src= "{{ pant.p_image_filepath }}"></a>
-
-{% endfor %}
 
 {% endblock %}
