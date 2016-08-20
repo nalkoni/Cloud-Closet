@@ -160,13 +160,14 @@ def view_all_items():
                            items=items)
 
 
-@app.route('/item_detail/<int:id>', methods=['GET'])
-def view_closet_item(id):
+@app.route('/itemdetail/<int:item_id>', methods=['GET'])
+def view_closet_item(item_id):
     """When user clicks closet item it displays more information"""
 
-    return render_template("item_detail.html")
+    item = Item.query.get(item_id)
 
-
+    return render_template("item_detail.html",
+                           item=item)
 
 
 #-----------------------------------------------------------------------------#

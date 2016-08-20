@@ -184,18 +184,6 @@ class Pant(db.Model):
 def sample_data():
     """sample data for testing"""
 
-# to protect against duplicate data if runs more then once
-    Closet.query.delete()
-    IType.query.delete()
-    Gender.query.delete()
-    ICategory.query.delete()
-    Size.query.delete()
-    Color.query.delete()
-    Item.query.delete()
-    Dress.query.delete()
-    Top.query.delete()
-    Pant.query.delete()
-
     #add sample data to above Classes(tables)
     ct = Closet(closet_name='Travel', notes='travel closet')
     cs = Closet(closet_name='Random', notes='random closet')
@@ -204,7 +192,7 @@ def sample_data():
     idress = IType(type_name='Dress')
     itop = IType(type_name='Top')
     ipant = IType(type_name='Pant')
-    db.session.flush
+    db.session.flush()
 
     gf = Gender(gender_name='female')
     db.session.flush()
@@ -233,6 +221,9 @@ def sample_data():
 
     db.session.add_all([ct, cs, idress, itop, ipant, gf, icb, icf, sxs, sm, cb, cr, new_item_dress, new_item_top, new_item_pant, new_dress, new_top, new_pant])
     db.session.commit()
+
+    print '**********'
+    print Gender.query.all()[0].gender_id
 
 
 ##############################################################################

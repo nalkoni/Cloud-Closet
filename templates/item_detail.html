@@ -2,16 +2,17 @@
 {% block content %}]
 
 <!-- Thinking I need to do a if statement for each scenario  -->
-<img src= "{{ _image_filepath }}">
+<img src= "{{ item.image_filepath }}">
 
-<p>Size: {{ size }} </p>
+<p>Size: {{ item.size.size }} </p>
 
-<p>Color: {{ color }} </p>
+<p>Color: {{ item.color.color }} </p>
 
-<p>Catagory: {{ catagory_name }} </p>
+<p>Catagory: {{ item.i_category.category_name }} </p>
 
-<p>Closet: {{ closet_name }}</p>
+<p>Closet: {{ item.closet.closet_name }}</p>
 
 <!-- I need to pull the information to display it based on what the user clicks -->
 
 {% endblock%}
+
