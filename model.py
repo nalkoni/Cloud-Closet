@@ -1,5 +1,4 @@
 """Models and database functions for Ratings project."""
-import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 # This is the connection to the PostgreSQL database; we're getting this through
@@ -221,9 +220,6 @@ def sample_data():
 
     db.session.add_all([ct, cs, idress, itop, ipant, gf, icb, icf, sxs, sm, cb, cr, new_item_dress, new_item_top, new_item_pant, new_dress, new_top, new_pant])
     db.session.commit()
-
-    print '**********'
-    print Gender.query.all()[0].gender_id
 
 
 ##############################################################################
