@@ -1,6 +1,7 @@
 """closet application"""
 import os
 from jinja2 import StrictUndefined
+from sqlalchemy import func
 
 from flask import Flask, render_template, request, flash, redirect, url_for, session, send_from_directory
 from flask_debugtoolbar import DebugToolbarExtension
@@ -124,7 +125,6 @@ def uploaded_file():
         uploaded_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
     image_path = "/static/images/" + filename
-
     color = request.form.get('color')
     closet = request.form.get('closet')
     size = request.form.get('size')
@@ -132,20 +132,33 @@ def uploaded_file():
     notes = request.form.get('notes')
     item_type = request.form.get('item_type')
 
-    if item_type == '1':
-        new_dress = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
-        db.session.add(new_dress)
+    #Handle case for when item_type is pant
+    if item_type == '1': 
+        new_item_pants = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        result = db.session.query(func.max(Item.item_id)).one()
+        max_id = int(result[0])
+        new_pants = Pant(item_id=max_id)
+        db.session.add_all([new_item_pants, new_pants])
         db.session.commit()
 
+    #Handle case for when item_type is dress   
     if item_type == '2':
-        new_top = Item(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
-        db.session.add(new_top)
+        new_item_dress = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        result = db.session.query(func.max(Item.item_id)).one()
+        max_id = int(result[0])
+        new_dress = Dress(item_id=max_id)
+        db.session.add_all([new_item_dress, new_dress])
+        db.session.commit()  
+
+    #Handle case for when item_type is top    
+    if item_type == '3':
+        new_item_top = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        result = db.session.query(func.max(Item.item_id)).one()
+        max_id = int(result[0])
+        new_top = Top(item_id=max_id)
+        db.session.add(new_item_top, new_top)
         db.session.commit()
 
-    if item_type == '3':
-        new_pants = Item(closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
-        db.session.add(new_pants)
-        db.session.commit()
 
     return redirect("/closets")
 
