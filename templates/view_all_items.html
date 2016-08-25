@@ -1,7 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h6>All Items:</h6>
+<style type="text/css">
+
+#weatherbar {
+    text-align: center;
+}
+
+</style>
+
+<div id="weatherbar">
+    <iframe src="http://cdnres.willyweather.com/widget/loadView.html?id=55936" width="850" height="92" frameborder="0" scrolling="no"></iframe>
+    <a style="height: 92px;z-index: 1;margin: -92px 0 0 0;position: relative;float: right;text-indent: -9999em;width: 20px" href="http://www.willyweather.com/ca/san-francisco-county/san-francisco.html"></a>
+</div>
+
+
+<h3>All Items:</h3>
 {% for item in items %}
 
     <a href="/itemdetail/{{ item.item_id }}"><img src= "{{ item.image_filepath }}"></a>

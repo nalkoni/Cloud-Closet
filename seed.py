@@ -86,6 +86,7 @@ def load_item_types():
 
 if __name__ == "__main__":
     connect_to_db(app)
+    db.drop_all()
     db.create_all()
 
     load_genders()

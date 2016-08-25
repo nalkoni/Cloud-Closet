@@ -1,6 +1,5 @@
 """Models and database functions for Ratings project."""
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
@@ -12,6 +11,25 @@ db = SQLAlchemy()
 #Model Definitions Aka Tables
 
 
+class User(db.Model):
+    """User allowed to create and use their own closets"""
+
+    __tablename__ = "users"
+
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    first_name = db.Column(db.String(64), nullable=False)
+    last_name = db.Column(db.String(64), nullable=False)
+    username = db.Column(db.String(125), nullable=False)
+    password = db.Column(db.String(64), nullable=False)
+    age = db.Column(db.Integer, nullable=True)
+    zipcode = db.Column(db.String(15), nullable=True)
+    gender_id = db.Column(db.Integer, db.ForeignKey('genders.gender_id'))
+
+    # Define relationship to gender
+    gender = db.relationship("Gender",
+                             backref=db.backref("users"))
+
+
 class Closet(db.Model):
     """User named closets"""
 
@@ -20,6 +38,10 @@ class Closet(db.Model):
     closet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     closet_name = db.Column(db.String(200), nullable=False)
     notes = db.Column(db.String(1000), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+    user = db.relationship("User",
+                           backref=db.backref("closets"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -108,6 +130,7 @@ class Item(db.Model):
     __tablename__ = "items"
 
     item_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     i_type_id = db.Column(db.Integer, db.ForeignKey('i_types.i_type_id'))
     closet_id = db.Column(db.Integer, db.ForeignKey('closets.closet_id'))
     notes = db.Column(db.String(1000), nullable=False)
@@ -115,6 +138,10 @@ class Item(db.Model):
     size_id = db.Column(db.Integer, db.ForeignKey('sizes.size_id'))
     color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
     image_filepath = db.Column(db.String, nullable=True)
+
+    # Define relationship to closet
+    user = db.relationship("User",
+                           backref=db.backref("items"))
 
     # Define relationship to closet
     closet = db.relationship("Closet",

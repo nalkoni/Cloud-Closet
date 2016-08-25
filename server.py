@@ -3,11 +3,12 @@ import os
 from jinja2 import StrictUndefined
 from sqlalchemy import func
 
-from flask import Flask, render_template, request, flash, redirect, url_for, session, send_from_directory
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.utils import secure_filename
+from functools import wraps
 
-from model import connect_to_db, db, ICategory, Closet, IType, Gender, Size, Color, Item, Dress, Top, Pant
+from model import connect_to_db, db, User, ICategory, Closet, IType, Gender, Size, Color, Item, Dress, Top, Pant
 
 #file  path to store the uploaded files
 UPLOAD_FOLDER = 'static/images'
@@ -37,7 +38,31 @@ def allowed_file(filename):
 def index():
     """homepage"""
 
-    return render_template("homepage.html")
+    if 'user_id' in session:
+        return render_template("homepage.html")
+    else:
+        flash('please login')
+        return redirect('login')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid username or password. Please try again.'
+        else:
+            session['logged_in'] = True
+            flash('You were logged in.')
+            return redirect(url_for('/'))
+    return render_template('login_form.html', error=error)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out.')
+    return redirect(url_for('/login'))
 
 
 @app.route('/createcloset', methods=['GET'])
@@ -53,8 +78,9 @@ def closet_created():
 
     closet_name = request.form.get("closet-name")
     notes = request.form.get("notes")
+    user_id = session.get('user_id')
 
-    new_closet = Closet(closet_name=closet_name, notes=notes)
+    new_closet = Closet(closet_name=closet_name, notes=notes, user_id=user_id)
 
     db.session.add(new_closet)
     db.session.commit()
@@ -68,7 +94,9 @@ def closet_created():
 def all_closets():
     """All closets"""
 
-    closets = Closet.query.order_by(Closet.closet_name).all()
+    user_id = session.get('user_id')
+
+    closets = Closet.query.filter_by(User.user_id == user_id).order_by(Closet.closet_name).all()
 
     return render_template("closets.html",
                            closets=closets)
@@ -131,34 +159,34 @@ def uploaded_file():
     category = request.form.get('category')
     notes = request.form.get('notes')
     item_type = request.form.get('item_type')
+    user_id = session.get('user_id')
 
     #Handle case for when item_type is pant
-    if item_type == '1': 
-        new_item_pants = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+    if item_type == '1':
+        new_item_pants = Item(user_id=user_id, i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
         result = db.session.query(func.max(Item.item_id)).one()
         max_id = int(result[0])
         new_pants = Pant(item_id=max_id)
         db.session.add_all([new_item_pants, new_pants])
         db.session.commit()
 
-    #Handle case for when item_type is dress   
+    #Handle case for when item_type is dress
     if item_type == '2':
-        new_item_dress = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        new_item_dress = Item(user_id=user_id, i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
         result = db.session.query(func.max(Item.item_id)).one()
         max_id = int(result[0])
         new_dress = Dress(item_id=max_id)
         db.session.add_all([new_item_dress, new_dress])
-        db.session.commit()  
+        db.session.commit()
 
-    #Handle case for when item_type is top    
+    #Handle case for when item_type is top
     if item_type == '3':
-        new_item_top = Item(i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        new_item_top = Item(user_id=user_id, i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
         result = db.session.query(func.max(Item.item_id)).one()
         max_id = int(result[0])
         new_top = Top(item_id=max_id)
         db.session.add(new_item_top, new_top)
         db.session.commit()
-
 
     return redirect("/closets")
 

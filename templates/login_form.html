@@ -1,0 +1,50 @@
+{% block content %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+
+.login { 
+    text-align: center;
+    }
+
+</style>
+
+<div class="login">
+
+    <h1>Organized Chaos</h1>
+    <br><br><br>
+    <h3></h3>
+
+    <form action="/login" method="POST">
+
+      
+      <div class="form-group">
+        <label>Email:
+        <input type="email" name="email" placeholder="Email" required class="form-control">
+        </label>
+      </div><br>
+    
+      <div class="form-group">
+        <label>Password:
+        <input type="password" placeholder="Password" name="password" required class="form-control">
+        </label>
+      </div><br><br>
+
+      <div class="form-group">
+        <input type="submit" value="Sign In" class="btn btn-default">
+      </div>
+    </form>
+
+    {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
+      {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
+
+</div>
+
+{% endblock %}
