@@ -44,24 +44,51 @@ def index():
         flash('please login')
         return redirect('login')
 
+@app.route('/register', methods=['GET'])
+def register():
+    """Display User Registration Form"""
 
-@app.route('/login', methods=['GET', 'POST'])
+    return render_template("user_register.html")
+
+@app.route('/register', methods=['POST'])
+def register_process():
+    """Display User Registration Form"""
+
+    return redirect("login")
+
+@app.route('/login', methods=['GET'])
 def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid username or password. Please try again.'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in.')
-            return redirect(url_for('/'))
-    return render_template('login_form.html', error=error)
+    """Display Login Form"""
+
+    return render_template("login_form.html")
+
+
+
+@app.route('/login', methods=['POST'])
+def login_validation():
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        flash("Invalid Email, Please Try Again")
+        return redirect("login")
+
+    if user.password != password:
+        flash("Invalid Password, Please Try Again")
+        return redirect("login")
+
+    session['user_id'] = user.user_id
+
+    flash("Logged In!")
+    return redirect("closets/%s" % user.user_id)
 
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out.')
+    del session["user_id"]
+    flash('Logged Out')
     return redirect(url_for('/login'))
 
 
@@ -96,7 +123,7 @@ def all_closets():
 
     user_id = session.get('user_id')
 
-    closets = Closet.query.filter_by(User.user_id == user_id).order_by(Closet.closet_name).all()
+    closets = Closet.query.filter_by(user_id == user_id).order_by(Closet.closet_name).all()
 
     return render_template("closets.html",
                            closets=closets)

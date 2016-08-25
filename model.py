@@ -19,15 +19,8 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
-    username = db.Column(db.String(125), nullable=False)
+    email = db.Column(db.String(125), nullable=False)
     password = db.Column(db.String(64), nullable=False)
-    age = db.Column(db.Integer, nullable=True)
-    zipcode = db.Column(db.String(15), nullable=True)
-    gender_id = db.Column(db.Integer, db.ForeignKey('genders.gender_id'))
-
-    # Define relationship to gender
-    gender = db.relationship("Gender",
-                             backref=db.backref("users"))
 
 
 class Closet(db.Model):
