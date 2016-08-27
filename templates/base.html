@@ -7,16 +7,8 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-               {{ message }}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
 </head>
+
 <body>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -37,6 +29,7 @@
           <li><a href="/addItem">Add An Item</a></li>
         </ul>
       </li>
+
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Suitcase<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#">Pack A Suitcase</a></li>
@@ -44,11 +37,23 @@
         </ul>
       </li>
     </ul>
+
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/login"><span class="glyphicon glyphicon-user"></span> {{ session['user_id'] }}</a></li>
+          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
     </ul>
   </div>
 </nav>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+           {{ message }}
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
 <div class="container-fluid">
 {% block content %}

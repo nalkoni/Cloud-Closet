@@ -3,10 +3,9 @@ import os
 from jinja2 import StrictUndefined
 from sqlalchemy import func
 
-from flask import Flask, render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.utils import secure_filename
-from functools import wraps
 
 from model import connect_to_db, db, User, ICategory, Closet, IType, Gender, Size, Color, Item, Dress, Top, Pant
 
@@ -44,24 +43,43 @@ def index():
         flash('please login')
         return redirect('login')
 
+
 @app.route('/register', methods=['GET'])
 def register():
     """Display User Registration Form"""
 
     return render_template("user_register.html")
 
+
 @app.route('/register', methods=['POST'])
 def register_process():
     """Display User Registration Form"""
 
+    f_name = request.form.get('first_name')
+    l_name = request.form.get('last_name')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    new_user = User(first_name=f_name,
+                    last_name=l_name,
+                    email=email,
+                    password=password)
+
+    db.session.add(new_user)
+    db.session.commit()
+
     return redirect("login")
+
 
 @app.route('/login', methods=['GET'])
 def login():
     """Display Login Form"""
 
-    return render_template("login_form.html")
-
+    if 'user_id' in session:
+        return render_template("homepage.html")
+    else:
+        flash('please login')
+        return render_template("login_form.html")
 
 
 @app.route('/login', methods=['POST'])
@@ -82,21 +100,25 @@ def login_validation():
     session['user_id'] = user.user_id
 
     flash("Logged In!")
-    return redirect("closets/%s" % user.user_id)
+    return redirect("closets")
 
 
 @app.route('/logout')
 def logout():
     del session["user_id"]
     flash('Logged Out')
-    return redirect(url_for('/login'))
+    return redirect(url_for('login'))
 
 
 @app.route('/createcloset', methods=['GET'])
 def create_closet():
     """Creating a new user closet to add to database"""
 
-    return render_template("add_closet_form.html")
+    if 'user_id' in session:
+        return render_template("add_closet_form.html")
+    else:
+        flash('please login')
+        return redirect('login')
 
 
 @app.route('/createcloset', methods=['POST'])
@@ -106,6 +128,7 @@ def closet_created():
     closet_name = request.form.get("closet-name")
     notes = request.form.get("notes")
     user_id = session.get('user_id')
+    print ("User_ID: %s" % user_id)
 
     new_closet = Closet(closet_name=closet_name, notes=notes, user_id=user_id)
 
@@ -123,7 +146,7 @@ def all_closets():
 
     user_id = session.get('user_id')
 
-    closets = Closet.query.filter_by(user_id == user_id).order_by(Closet.closet_name).all()
+    closets = Closet.query.filter_by(user_id=user_id).order_by(Closet.closet_name).all()
 
     return render_template("closets.html",
                            closets=closets)
@@ -133,8 +156,10 @@ def all_closets():
 @app.route('/viewcloset/<int:closet_id>', methods=['GET'])
 def view_all_closet_items(closet_id):
     """Displays all items in closet"""
+
+    user_id = session.get('user_id')
     # user clicked closet
-    items = Item.query.filter(Item.closet_id == closet_id).all()
+    items = Item.query.filter((Item.closet_id == closet_id) & (Item.user_id == user_id)).all()
 
     return render_template("view_closet.html",
                            items=items)
@@ -149,13 +174,15 @@ def upload_file():
     i_categories = ICategory.query.order_by('category_name').all()
     item_types = IType.query.order_by('type_name').all()
     sizes = Size.query.filter(Size.gender_id == 2).all()
+    user_id = session.get('user_id')
 
     return render_template("add_item.html",
                            colors=colors,
                            closets=closets,
                            item_types=item_types,
                            i_categories=i_categories,
-                           sizes=sizes)
+                           sizes=sizes,
+                           user_id=user_id)
 
 
 @app.route('/uploads', methods=['POST'])
@@ -191,28 +218,37 @@ def uploaded_file():
     #Handle case for when item_type is pant
     if item_type == '1':
         new_item_pants = Item(user_id=user_id, i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        db.session.flush()
+
         result = db.session.query(func.max(Item.item_id)).one()
-        max_id = int(result[0])
+        max_id = result
         new_pants = Pant(item_id=max_id)
+
         db.session.add_all([new_item_pants, new_pants])
         db.session.commit()
 
     #Handle case for when item_type is dress
     if item_type == '2':
         new_item_dress = Item(user_id=user_id, i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        db.session.flush()
+
         result = db.session.query(func.max(Item.item_id)).one()
-        max_id = int(result[0])
+        max_id = result
         new_dress = Dress(item_id=max_id)
+
         db.session.add_all([new_item_dress, new_dress])
         db.session.commit()
 
     #Handle case for when item_type is top
     if item_type == '3':
         new_item_top = Item(user_id=user_id, i_type_id=item_type, closet_id=closet, notes=notes, i_category_id=category, size_id=size, color_id=color, image_filepath=image_path)
+        db.session.flush()
+
         result = db.session.query(func.max(Item.item_id)).one()
-        max_id = int(result[0])
+        max_id = result
         new_top = Top(item_id=max_id)
-        db.session.add(new_item_top, new_top)
+
+        db.session.add_all([new_item_top, new_top])
         db.session.commit()
 
     return redirect("/closets")
@@ -222,10 +258,21 @@ def uploaded_file():
 def view_all_items():
     """User has option to view all uploaded items regardless of closet"""
 
-    items = Item.query.all()
+    user_id = session.get('user_id')
+
+    colors = Color.query.all()
+
+    categories = ICategory.query.all()
+
+    closets = Closet.query.all()
+
+    items = Item.query.filter(User.user_id == user_id).all()
 
     return render_template("view_all_items.html",
-                           items=items)
+                           items=items,
+                           colors=colors,
+                           categories=categories,
+                           closets=closets)
 
 
 @app.route('/itemdetail/<int:item_id>', methods=['GET'])
@@ -236,6 +283,39 @@ def view_closet_item(item_id):
 
     return render_template("item_detail.html",
                            item=item)
+
+
+@app.route('/search', methods=['GET'])
+def search_items():
+    """ Allows user to search using parameters """
+
+    color = request.args.get('color')
+    category = request.args.get('category')
+    size = request.args.get('size')
+    closet = request.args.get('closet')
+
+    criteria = []
+
+    if color:  # if color is not None:
+        criteria.append(Item.color_id == color)
+
+    if category:
+        criteria.append(Item.i_category_id == category)
+
+    if size:
+        criteria.append(Item.size_id == size)
+
+    if closet:
+        criteria.append(Item.closet_id == closet)
+
+    items = Item.query.filter(*criteria).all()
+
+    item_ids = []
+
+    for item in items:
+        item_ids.append(str(item.item_id))
+
+    return jsonify(items=item_ids)
 
 
 #-----------------------------------------------------------------------------#

@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
-{% block content %}]
+{% block content %}
 
 <!-- Thinking I need to do a if statement for each scenario  -->
 <img src= "{{ item.image_filepath }}">
 
-<p>Size: {{ item.size.size }} </p>
+<p><strong>Size:</strong>{{ item.size.size }} </p>
 
-<p>Color: {{ item.color.color }} </p>
+<p><strong>Color:</strong> {{ item.color.color }} </p>
 
-<p>Catagory: {{ item.i_category.category_name }} </p>
+<p><strong>Catagory:</strong> {{ item.i_category.category_name }} </p>
 
-<p>Closet: {{ item.closet.closet_name }}</p>
+<p><strong>Closet:</strong> {{ item.closet.closet_name }}</p>
+
+<p><strong>Notes:</strong> {{item.notes}}
 
 <!-- I need to pull the information to display it based on what the user clicks -->
 

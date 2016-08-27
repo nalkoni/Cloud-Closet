@@ -9,6 +9,41 @@
 
 </style>
 
+<script type="text/javascript">
+$(function(){
+    var searchItems = function(){
+
+        var color_id = $('#color_selector').val()
+        var category = $('#category_selector').val()
+        var closet = $('closet_selector').val()
+
+        $.ajax({
+          url: "search",
+          type: "get",
+          data: {color: color_id, category: category},
+          success: function(response) {
+            $(".closet_item").hide()
+            for(var i=0; i<response.items.length; i++){
+
+                $("[itemid='" +response.items[i]+ "']").show()
+
+            }
+
+          },
+          // error: function(xhr) {
+          //   //Do Something to handle error
+          // }
+        });
+    }
+
+    $("#color_selector").change(searchItems)
+    $("#category_selector").change(searchItems)
+    $("closet_selector").change(searchItems)
+
+})
+
+</script>
+
 <div id="weatherbar">
     <iframe src="http://cdnres.willyweather.com/widget/loadView.html?id=55936" width="850" height="92" frameborder="0" scrolling="no"></iframe>
     <a style="height: 92px;z-index: 1;margin: -92px 0 0 0;position: relative;float: right;text-indent: -9999em;width: 20px" href="http://www.willyweather.com/ca/san-francisco-county/san-francisco.html"></a>
@@ -16,11 +51,44 @@
 
 
 <h3>All Items:</h3>
-{% for item in items %}
+<div class="form-group"> 
+    <label>Color:<br>
+      <select id="color_selector" name="color">
+        {% for color in colors %}
+          <option value= '{{ color.color_id }}' > {{ color }} </option>
+        {% endfor %}
+        </select><br><br>
+    </label>
+  </div>  
 
-    <a href="/itemdetail/{{ item.item_id }}"><img src= "{{ item.image_filepath }}"></a>
+  <div class="form-group">
+    <label>Category:<br>
+      <select id="category_selector" name="category">
+        {% for category in categories %}
+          <option value= '{{ category.i_category_id }}' > {{ category }} </option>
+        {% endfor %}
+      </select><br><br>
+    </label>
+  </div>
+
+    <div class="form-group">
+    <label>Closet:<br> 
+      <select id="closet_selector"name="closet">
+        {% for closet in closets %}
+          <option value= '{{ closet.closet_id }}' > {{ closet }} </option>
+        {% endfor %}
+      </select><br><br>
+    </label>
+  </div> 
+
+
+{% for item in items %}
+    <div itemid="{{ item.item_id }}" class="closet_item">
+        <a href="/itemdetail/{{ item.item_id }}"><img src= "{{ item.image_filepath }}"></a>
+    </div>
 
 {% endfor %}
+
 
 
 
