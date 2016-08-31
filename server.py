@@ -40,7 +40,7 @@ def index():
     if 'user_id' in session:
         return render_template("homepage.html")
     else:
-        flash('please login')
+        flash('Please Login!')
         return redirect('login')
 
 
@@ -78,7 +78,7 @@ def login():
     if 'user_id' in session:
         return render_template("homepage.html")
     else:
-        flash('please login')
+        flash('Please Login!')
         return render_template("login_form.html")
 
 
@@ -117,7 +117,7 @@ def create_closet():
     if 'user_id' in session:
         return render_template("add_closet_form.html")
     else:
-        flash('please login')
+        flash('Please Login')
         return redirect('login')
 
 
@@ -276,7 +276,7 @@ def view_all_items():
 
     closets = Closet.query.all()
 
-    items = Item.query.filter(Item.user_id == user_id).all()
+    items = Item.query.filter(User.user_id == user_id).all()
 
     return render_template("view_all_items.html",
                            items=items,
@@ -308,9 +308,13 @@ def search_items():
 
     if color:  # if color is not None:
         criteria.append(Item.color_id == color)
+    else:
+        criteria = None
 
     if category:
         criteria.append(Item.i_category_id == category)
+    else:
+        criteria = None
 
     if size:
         criteria.append(Item.size_id == size)
@@ -334,7 +338,7 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = True
+    app.debug = False
 
     connect_to_db(app)
 
