@@ -22,7 +22,7 @@ $(function(){
         var color_id = $('#color_selector').val()
         var category = $('#category_selector').val()
         var closet = $('#closet_selector').val()
-        console.log(color_id, category, closet)
+
         $.ajax({
           url: "search",
           type: "get",
@@ -38,6 +38,7 @@ $(function(){
           // }
         });
     }
+    
     $("#color_selector").change(searchItems)
     $("#category_selector").change(searchItems)
     $("closet_selector").change(searchItems)

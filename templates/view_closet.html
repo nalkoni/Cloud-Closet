@@ -25,9 +25,9 @@ $(function(){
         var category = $('#category_selector').val()
 
         $.ajax({
-          url: "search",
+          url: "http://localhost:5000/search",
           type: "get",
-          data: {color: color_id, category: category, closet: closet},
+          data: {color: color_id, category: category},
           success: function(response) {
             $(".closet_item").hide()
             for(var i=0; i<response.items.length; i++){
@@ -56,7 +56,7 @@ $(function(){
       <div class="form-group"> 
           <label>Color:<br>
             <select id="color_selector" name="color">
-                <option value="None">Select Color</option>
+                <option value="">Select Color</option>
               {% for color in colors %}
                 <option value= '{{ color.color_id }}' > {{ color }} </option>
               {% endfor %}
@@ -67,7 +67,7 @@ $(function(){
         <div class="form-group">
           <label>Category:<br>
             <select id="category_selector" name="category">
-                <option value="None">Select Category</option>
+                <option value="">Select Category</option>
               {% for category in categories %}
                 <option value= '{{ category.i_category_id }}' > {{ category }} </option>
               {% endfor %}
@@ -85,7 +85,7 @@ $(function(){
         <a style="height: 92px;z-index: 1;margin: -92px 0 0 0;position: relative;float: right;text-indent: -9999em;width: 20px" href="http://www.willyweather.com/ca/san-francisco-county/san-francisco.html"></a>
     </div>
 
-    <h3>Test Closet</h3> 
+    <h3>{{ closet.closet_name }}</h3> 
 
     {% for item in items %}
         <div itemid="{{ item.item_id }}" class="closet_item">
