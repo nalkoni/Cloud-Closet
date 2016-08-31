@@ -22,6 +22,7 @@ $(function(){
         var color_id = $('#color_selector').val()
         var category = $('#category_selector').val()
         var closet = $('#closet_selector').val()
+        console.log(color_id, category, closet)
         $.ajax({
           url: "search",
           type: "get",
@@ -50,7 +51,7 @@ $(function(){
       <div class="form-group"> 
           <label>Color:<br>
             <select id="color_selector" name="color">
-              <option value= None>Select Color</option>
+              <option value="">Select Color</option>
               {% for color in colors %}
                 <option value= '{{ color.color_id }}' > {{ color }} </option>
               {% endfor %}
@@ -61,7 +62,7 @@ $(function(){
         <div class="form-group">
           <label>Category:<br>
             <select id="category_selector" name="category">
-              <option value= None>Select Category</option>
+              <option value="">Select Category</option>
               {% for category in categories %}
                 <option value= '{{ category.i_category_id }}' > {{ category }} </option>
               {% endfor %}
@@ -72,7 +73,7 @@ $(function(){
           <div class="form-group">
           <label>Closet:<br> 
             <select id="closet_selector" name="closet">
-              <option value= None>Select Closet</option>
+              <option value="">Select Closet</option>
               {% for closet in closets %}
                 <option value= '{{ closet.closet_id }}' > {{ closet }} </option>
               {% endfor %}

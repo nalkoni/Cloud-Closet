@@ -308,13 +308,9 @@ def search_items():
 
     if color:  # if color is not None:
         criteria.append(Item.color_id == color)
-    else:
-        criteria = None
 
     if category:
         criteria.append(Item.i_category_id == category)
-    else:
-        criteria = None
 
     if size:
         criteria.append(Item.size_id == size)
