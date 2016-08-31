@@ -11,6 +11,10 @@
     display:inline-block;
 }
 
+#filter-side-navbar {
+  background: #E5D0CC;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -47,87 +51,86 @@ $(function(){
     })
 
 </script>
+  <div class="row">
+    <nav class="col-sm-2 sidebar" id="filter-side-navbar">
+      <div class="navbar nav-sidebar">
+        <ul class="nav navpills nav-stacked" data-spy="affix" data-offset-top="205">
+          <div id="form-div">
+            <form action='/search' id="filters-form">
+              <h4>Filter By:</h4><br>
 
-<div id="weatherbar">
-    <iframe src="http://cdnres.willyweather.com/widget/loadView.html?id=55936" width="850" height="92" frameborder="0" scrolling="no"></iframe>
-    <a style="height: 92px;z-index: 1;margin: -92px 0 0 0;position: relative;float: right;text-indent: -9999em;width: 20px" href="http://www.willyweather.com/ca/san-francisco-county/san-francisco.html"></a>
-</div>
+              <li class="divider"></li>
+              
+              <li class="side-nav-category" id="color_selector" name="color">
+                <h5>Color:</h5>
+                  {% for color in colors %}
+                  <label>
+                    <input type="checkbox" value="{{ color.color_id }}"> {{ color }}</input>
+                  </label><br>
+                  {% endfor %}
 
+                  <button id="show-color" type="button" class="btn btn-default btn-xs">Show More</button><br>
+             
+              </li>
 
-<h3>All Items:</h3>
+              <li class="divider"></li><br>
+              
+              <li class="side-nav-category" id="category_selector" name="category">
+                <h5>Category:</h5>
+                  {% for category in categories %}
+                  <label>
+                    <input type="checkbox" value="{{ category.i_category_id }}"> {{ category }} </input>
+                  </label><br>
+                  {% endfor %}
 
-<h6>Filter By:</h6>
+                  <button id="show-color" type="button" class="btn btn-default btn-xs">Show More</button><br>
 
-<div class="div-inline">
+                </li>
 
-      <div class="button-group">
-        <button type="button" id="color_selector" name="color" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span class="filter">Color</span> 
-          <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
+                <li class="divider"></li><br>
 
-          {% for color in colors %}
-            <li><a href="#" class="small" data-value='{{ color.color_id }}' tabIndex="-1">
-              <label><input type="checkbox"/>&nbsp;{{ color }}</label>
-            </a></li>
-          {% endfor %}
+                <li class="side-nav-category" id="closet_selector" name="closet">
+                  <h5>Closet:</h5>
+                  {% for closet in closets %}
+                  <label>
+                    <input type="checkbox" value="{{ closet.closet_id }}"> {{ closet }} </input><br>
+                  </label>
+                  {% endfor %}
+                </li>
+           
+            <li class="divider"></li><br>
 
-        </ul>
-      </div>
- 
-</div>
+            <input type="submit" id="filters" value="Apply Filters" class="btn btn-default navbar-"></input>
 
-<div class="div-inline">
-
-      <div class="button-group">
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span class="filter">Category</span>
-          <span class="caret"></span>
-        </button>
-        <ul id="category_selector" class="dropdown-menu" name="category">
-
-          {% for category in categories %}
-            <li><a href="#" class="small" data-value='{{ category.i_category_id }}' tabIndex="-1">
-              <label><input type="checkbox"/>&nbsp;{{ category }}</label>
-            </a></li>
-          {% endfor %}
-
-        </ul>
-      </div>
-  
-</div>
-
-
-<div class="div-inline">
-
-      <div class="button-group">
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span class="filter">Closet</span>
-          <span class="caret"></span>
-        </button>
-        <ul id="closet_selector" class="dropdown-menu" name="category">
-
-          {% for closet in closets %}
-            <li><a href="#" class="small" data-value='{{ closet.closet_id }}' tabIndex="-1">
-              <label><input type="checkbox"/>&nbsp;{{ closet }}</label>
-            </a></li>
-          {% endfor %}
-        
-        </ul>
-      </div>
-
-</div>
-<br><br>
+              </form>
+            </div>
+          </ul>
+        </div>
+      </nav>
 
 
-{% for item in items %}
+      <div class="col-sm-10 main">
 
-    <div itemid="{{ item.item_id }}" class="closet_item">
-        <a href="/itemdetail/{{ item.item_id }}"><img src= "{{ item.image_filepath }}"></a>
+        <div id="weatherbar">
+            <iframe src="http://cdnres.willyweather.com/widget/loadView.html?id=55936" width="850" height="92" frameborder="0" scrolling="no"></iframe>
+            <a style="height: 92px;z-index: 1;margin: -92px 0 0 0;position: relative;float: right;text-indent: -9999em;width: 20px" href="http://www.willyweather.com/ca/san-francisco-county/san-francisco.html"></a>
+        </div>
+
+        <h3>All Items:</h3>
+
+        {% for item in items %}
+          <div itemid="{{ item.item_id }}" class="closet_item">
+              <a href="/itemdetail/{{ item.item_id }}"><img src= "{{ item.image_filepath }}"></a>
+          </div>
+        {% endfor %}
     </div>
+  </div>    
+</div>
 
-{% endfor %}
+
+
+
+
 
 
 

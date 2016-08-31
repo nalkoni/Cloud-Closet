@@ -158,11 +158,21 @@ def view_all_closet_items(closet_id):
     """Displays all items in closet"""
 
     user_id = session.get('user_id')
+
+    colors = Color.query.all()
+
+    categories = ICategory.query.all()
+
+    closet = Closet.query.filter(Closet.closet_id == closet_id).one()
+
     # user clicked closet
     items = Item.query.filter((Item.closet_id == closet_id) & (Item.user_id == user_id)).all()
 
     return render_template("view_closet.html",
-                           items=items)
+                           items=items,
+                           colors=colors,
+                           categories=categories,
+                           closet=closet)
 
 
 @app.route('/addItem')
@@ -266,7 +276,7 @@ def view_all_items():
 
     closets = Closet.query.all()
 
-    items = Item.query.filter(User.user_id == user_id).all()
+    items = Item.query.filter(Item.user_id == user_id).all()
 
     return render_template("view_all_items.html",
                            items=items,
@@ -324,7 +334,7 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = False
+    app.debug = True
 
     connect_to_db(app)
 
