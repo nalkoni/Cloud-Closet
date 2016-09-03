@@ -1,0 +1,42 @@
+body {
+    font-family: 'Josefin Slab', serif;
+    font-size: 20px;
+}
+
+.base-header {
+    font-family: 'Amatic SC', cursive;
+    font-size: 75px;
+}
+
+.website-header {
+    text-align: center;
+}
+
+.suitcase-quote {
+    text-align: center;
+}
+
+/*  clear bootstrap header colors */
+.navbar-default {
+    background-color: white;
+    border-color: white;
+    text-align: center;
+}
+
+#weatherbar {
+    text-align: center;
+}
+
+#filter-side-navbar {
+  background: #E5D0CC;
+}
+
+.closet_item { 
+    display: block;
+    float: left;
+    margin-right: 5px;
+}
+
+
+
+

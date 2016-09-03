@@ -6,6 +6,9 @@ from sqlalchemy import func
 from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from werkzeug.utils import secure_filename
+from flask_wtf import Form
+from wtforms.fields.html5 import DateField
+
 
 from model import connect_to_db, db, User, ICategory, Closet, IType, Gender, Size, Color, Item, Dress, Top, Pant
 
@@ -27,6 +30,12 @@ app.jinja_env.undefined = StrictUndefined
 
 #-----------------------------------------------------------------------------#
 #Routes
+
+class ExampleForm(Form):
+    """docstring for ExampleForm"""
+
+    dt = DateField('DatePicker', format='%Y-%m-%d')
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -100,7 +109,7 @@ def login_validation():
     session['user_id'] = user.user_id
 
     flash("Logged In!")
-    return redirect("closets")
+    return redirect("/")
 
 
 @app.route('/logout')
@@ -274,7 +283,7 @@ def view_all_items():
 
     categories = ICategory.query.all()
 
-    closets = Closet.query.all()
+    closets = Closet.query.filter(Closet.user_id == user_id).all()
 
     items = Item.query.filter(User.user_id == user_id).all()
 
@@ -293,6 +302,36 @@ def view_closet_item(item_id):
 
     return render_template("item_detail.html",
                            item=item)
+
+
+@app.route('/addsuitcase', methods=['GET'])
+def add_suitcase():
+    """Allows user to start a suitcases"""
+    form = ExampleForm()
+
+    return render_template("add_suitcase_form.html",
+                           form=form)
+
+
+@app.route('/addsuitcase', methods=['POST'])
+def add_suitcase_to_database():
+    """Allows user to create closet"""
+
+    return redirect("/allsuitcases")
+
+
+@app.route('/allsuitcases', methods=['GET'])
+def all_suitcases():
+    """User can see all suitcases"""
+
+    return render_template("suitcases.html")
+
+
+@app.route('/viewsuitcase', methods=['GET'])
+def view_suitcases():
+    """User can see all items in their suitcase"""
+
+    return render_template("suitcases_view.html")
 
 
 @app.route('/search', methods=['GET'])

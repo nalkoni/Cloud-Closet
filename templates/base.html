@@ -7,22 +7,29 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles1.css" type='text/css'>
 </head>
 
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">CLOUD CLOSET</a>
-    </div>
+
+<div class="website-header">
+  <h1 class="base-header">CLOUD CLOSET</h1>
+  <p>Out of clutter, find simplicity...</p>
+</div>
+
+<nav class="navbar navbar-default" role="navigation">
     <ul class="nav navbar-nav">
+      
       <li><a href="/">Home</a></li>
+
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Closets<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="/createcloset">Create a Closet</a></li>
           <li><a href="/closets">View Closets</a></li>
         </ul>
       </li>
+
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Items<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="/allitems">View All Items</a></li>
@@ -32,19 +39,18 @@
 
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Suitcase<span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Pack A Suitcase</a></li>
-          <li><a href="#">View All Suitcases</a></li>
+          <li><a href="/addsuitcase">Start A Suitcase</a></li>
+          <li><a href="/allsuitcases">View All Suitcases</a></li>
         </ul>
       </li>
-    </ul>
 
-    <ul class="nav navbar-nav navbar-right">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login<span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="/login"><span class="glyphicon glyphicon-user"></span> {{ session['user_id'] }}</a></li>
           <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-    </ul>
-  </div>
+        </ul>
+      </li>
+  
 </nav>
 
 {% with messages = get_flashed_messages() %}
@@ -61,8 +67,7 @@
 {% endblock %}
 </div>
 
-
-
+<footer>Copyright © Noora Alkowni</footer>
 
 </body>
 </html>

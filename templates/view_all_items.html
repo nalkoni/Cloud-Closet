@@ -1,21 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<style type="text/css">
-#weatherbar {
-    text-align: center;
-}
-
-.div-inline{
-    display:inline-block;
-}
-
-#filter-side-navbar {
-  background: #E5D0CC;
-}
-
-</style>
-
 <script type="text/javascript">
 $(function(){
     var searchItems = function(){
@@ -26,7 +11,7 @@ $(function(){
         $.ajax({
           url: "search",
           type: "get",
-          data: {color: color_id, category: category},
+          data: {color: color_id, category: category, closet:closet},
           success: function(response) {
             $(".closet_item").hide()
             for(var i=0; i<response.items.length; i++){
@@ -41,7 +26,7 @@ $(function(){
     
     $("#color_selector").change(searchItems)
     $("#category_selector").change(searchItems)
-    $("closet_selector").change(searchItems)
+    $("#closet_selector").change(searchItems)
 })
 </script>
 

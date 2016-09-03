@@ -42,6 +42,38 @@ class Closet(db.Model):
         return "%s" % (self.closet_name)
 
 
+class Suitcase(db.Model):
+    """docstring for Suitcase"""
+
+    __tablename__ = "suitcases"
+
+    suitcase_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    suitcase_name = db.Column(db.String(200), nullable=False)
+    notes = db.Column(db.String(1000), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+
+    user = db.relationship("User",
+                           backref=db.backref("suitcases"))
+
+
+class Suitcase_item(object):
+    """docstring for Suitcase_item"""
+
+    __tablename__ = "suitcases_items"
+
+    suitcases_items_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    suitcase_id = db.Column(db.Integer, db.ForeignKey('suitcases.suitcase_id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('items.item_id'))
+
+    # Define relationship to Suitcases
+    suitcase = db.relationship("Suitcase",
+                               backref=db.backref("suitcases_items"))
+
+    # Define relationship to Item
+    item = db.relationship("Item",
+                           backref=db.backref("suitcases_items"))
+
+
 class Gender(db.Model):
     """Genders"""
 
@@ -132,7 +164,7 @@ class Item(db.Model):
     color_id = db.Column(db.Integer, db.ForeignKey('colors.color_id'))
     image_filepath = db.Column(db.String, nullable=True)
 
-    # Define relationship to closet
+    # Define relationship to User
     user = db.relationship("User",
                            backref=db.backref("items"))
 

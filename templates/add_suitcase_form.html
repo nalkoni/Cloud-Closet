@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Include Required Prerequisites -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+ 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+<h1 class='suitcase-quote'>Keep Calm &amp; Start Packing...</h1>
+
+$('input[name="daterange"]').daterangepicker();
+<input type="text" name="daterange" value="01/01/2015 - 01/31/2015" />
+
+<script type="text/javascript">
+$(function() {
+    $('input[name="daterange"]').daterangepicker();
+});
+</script>
+
+<form action="/addsuitcase" method="POST">
+
+    <div class='add-suitcase'>
+        Trip Name: 
+            <input type="text" name="trip-name">
+        <br><br>
+    </div>
+
+   <div class='add-suitcase'>
+        Destination: 
+            <input type="text" name="destination">
+        <br><br>
+    </div>
+
+    <div class='travel-dates'>
+        Travel Dates: 
+    <div class="start-travel">
+        Depart:
+        {{ form.dt(class='datepicker') }}
+        {{ form.hidden_tag() }}
+    <br><br>
+    </div>
+
+    <div class="end-travel">
+        Return:
+        {{ form.dt(class='datepicker') }}
+        {{ form.hidden_tag() }}
+    <br><br>
+    </div>
+
+    </div>
+
+    <div>
+        <input type="submit" value="Create Suitcase!">
+    </div><br><br>
+
+</form>
+
+
+
+ 
+    
+{% endblock %}
