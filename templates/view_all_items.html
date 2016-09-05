@@ -95,7 +95,7 @@ $(function(){
               
               {% for suitcase in suitcases %}
                <!--  <li><a href="#">{{ suitcase.suitcase_name }}</a></li> -->
-                <li><button type="button" itemid='{{ suitcase.suitcase_id}}' value='{{ suitcase.suitcase_id}}' name="suitcase_id" class="btn btn-default add-to-suitcase-btn btn-xs">{{ suitcase.suitcase_name }}</button></li><br>              
+                <li><button type="button" itemid="{{ item.item_id }}" suitcaseid='{{ suitcase.suitcase_id}}' value='{{ suitcase.suitcase_id}}' name="suitcase_id" class="btn btn-default add-to-suitcase-btn btn-xs">{{ suitcase.suitcase_name }}</button></li><br>              
               {% endfor %}
 
                 <li role="separator" class="divider"></li>

@@ -301,17 +301,19 @@ def adding_to_suitcase_or_today():
     """Adding to a suitcase_items table or to wear today"""
 
     user_id = session.get('user_id')
-    suitcase_id = request.args.get("suitcase_id")
-    item_id = request.args.get("item_id")
+    suitcase_id = request.form.get("suitcase_id")
+    item_id = request.form.get("item_id")
 
-    action = request.args.get("action")
+    action = request.form.get("action")
     
     if action == "addToSuitcase":
         suitcase_item = SuitcaseItem(suitcase_id=suitcase_id, item_id=item_id)
         alert = "You have successfully added this  to your suitcase!"
 
-    db.session.add(suitcase_item)
-    db.session.commit()
+        db.session.add(suitcase_item)
+        db.session.commit()
+    else:
+        alert = "Action not allowed"
 
     return jsonify({'alert': alert})
 
