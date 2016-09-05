@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% for suitcase in suitcases %}
-    <p>
-      <a href="/viewsuitcase/{{ suitcase.suitcase_id }}"><img alt="Suitcase"src="/static/images/suitcase.jpg"><br>{{ suitcase.suitcase_name }}</a>
-    <p>
-  {% endfor %}
- 
- 
-    
+{% for suitcase in suitcases %} 
+    <div class="suitcases">
+        <p>
+        <a href="/viewsuitcase/{{ suitcase.suitcase_id }}"><img alt="Suitcase"src="/static/images/suitcase.jpg"><br>{{ suitcase.suitcase_name }}</a>
+        <p>
+    </div>
+{% endfor %}
 {% endblock %}

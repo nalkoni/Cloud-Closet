@@ -9,7 +9,7 @@ body  {
 
 .base-header {
     font-family: 'Amatic SC', cursive;
-    font-size: 75px;
+    font-size: 70px;
 }
 
 .website-header {
@@ -22,9 +22,10 @@ body  {
 
 /*  clear bootstrap header colors */
 .navbar-default {
-    background-color: white;
-    border-color: white;
+    background-color: transparent;
+    border-color: transparent;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 #weatherbar {
@@ -42,18 +43,33 @@ body  {
     text-align: center;
 }
 
+.suitcases { 
+    display: block;
+    float: left;
+    margin-right: 5px;
+    text-align: center;
+}
+
+.suitcase-items {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    text-align: center;
+}
+
 
 #wrapper {
     min-height:100%;
     position:relative;
 }
 #header {
-    padding:10px;
+    padding:5px;
 }
 
 #content {
     padding-bottom:100px; /* Height of the footer element */
 }
+
 #footer {
     background:#ededed;
     width:100%;
@@ -67,5 +83,14 @@ body  {
     text-align: center;
 }
 
+.add-items-btn {
+    background-color: transparent;
+    width: 300px;
+    height: 460px;
+}
+
+li {
+    text-align: center;
+}
 
 
