@@ -374,13 +374,17 @@ def view_suitcases(suitcase_id):
 
     user_id = session.get('user_id')
 
-    suitcase = Suitcase.query.filter(Suitcase.suitcase_id == suitcase_id).one()
+    suitcase = Suitcase.query.get(suitcase_id)
 
-    suitcase_items = Suitcase.query.filter(SuitcaseItem.suitcase_id == suitcase_id).all()
+    # suitcase = Suitcase.query.filter((Suitcase.suitcase_id == suitcase_id) & (Suitcase.user_id == user_id)).one()
+
+    suitcase_items = SuitcaseItem.query.filter(SuitcaseItem.suitcase_id == suitcase_id).all()
+
+    
 
 
     return render_template("suitcase_view.html",
-                           suitcase = suitcase,
+                           suitcase=suitcase,
                            suitcase_items=suitcase_items)
 
 

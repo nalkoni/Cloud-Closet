@@ -13,12 +13,14 @@
     <a href="/allitems" class="btn btn-default">+<br>Add Items to Suitcase!</a>
  </div><br><br>
 
+{% for suitcase_item in suitcase_items %}
+    <p> {{ suitcase_item.item_id }} <p>
+
+{% endfor %}
+
 <div class="back-button">
   <a href="/allsuitcases"><img alt="back button"src="/static/images/back.png"> Back to Suitcases...</a>
 </div>
 
-{% for suitcase_item in suitcase_items %}
-
-{% endfor %}
-    
 {% endblock %}
+
