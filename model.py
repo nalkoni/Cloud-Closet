@@ -49,6 +49,8 @@ class Suitcase(db.Model):
 
     suitcase_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     suitcase_name = db.Column(db.String(200), nullable=False)
+    destination = db.Column(db.String(200), nullable=False)
+    travel_dates = db.Column(db.String(200), nullable=True)
     notes = db.Column(db.String(1000), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
@@ -56,10 +58,10 @@ class Suitcase(db.Model):
                            backref=db.backref("suitcases"))
 
 
-class Suitcase_item(object):
+class SuitcaseItem(db.Model):
     """docstring for Suitcase_item"""
 
-    __tablename__ = "suitcases_items"
+    __tablename__ = "suitcase_items"
 
     suitcases_items_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     suitcase_id = db.Column(db.Integer, db.ForeignKey('suitcases.suitcase_id'))

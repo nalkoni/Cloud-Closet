@@ -10,7 +10,7 @@ from flask_wtf import Form
 from wtforms.fields.html5 import DateField
 
 
-from model import connect_to_db, db, User, ICategory, Closet, IType, Gender, Size, Color, Item, Dress, Top, Pant
+from model import connect_to_db, db, User, ICategory, Closet, IType, Gender, Size, Color, Item, Dress, Top, Pant, Suitcase, SuitcaseItem
 
 #file  path to store the uploaded files
 UPLOAD_FOLDER = 'static/images'
@@ -283,6 +283,8 @@ def view_all_items():
 
     categories = ICategory.query.all()
 
+    suitcases = Suitcase.query.filter(Suitcase.user_id == user_id).all()
+
     closets = Closet.query.filter(Closet.user_id == user_id).all()
 
     items = Item.query.filter(User.user_id == user_id).all()
@@ -291,7 +293,29 @@ def view_all_items():
                            items=items,
                            colors=colors,
                            categories=categories,
-                           closets=closets)
+                           closets=closets,
+                           suitcases=suitcases)
+
+@app.route('/add', methods=['POST'])
+def adding_to_suitcase_or_today():
+    """Adding to a suitcase_items table or to wear today"""
+
+    user_id = session.get('user_id')
+    suitcase_id = request.args.get("suitcase_id")
+    item_id = request.args.get("item_id")
+
+    action = request.args.get("action")
+    
+    if action == "addToSuitcase":
+        suitcase_item = SuitcaseItem(suitcase_id=suitcase_id, item_id=item_id)
+        alert = "You have successfully added this  to your suitcase!"
+
+    db.session.add(suitcase_item)
+    db.session.commit()
+
+    return jsonify({'alert': alert})
+
+
 
 
 @app.route('/itemdetail/<int:item_id>', methods=['GET'])
@@ -307,15 +331,25 @@ def view_closet_item(item_id):
 @app.route('/addsuitcase', methods=['GET'])
 def add_suitcase():
     """Allows user to start a suitcases"""
-    form = ExampleForm()
 
-    return render_template("add_suitcase_form.html",
-                           form=form)
+    return render_template("add_suitcase_form.html")
 
 
 @app.route('/addsuitcase', methods=['POST'])
 def add_suitcase_to_database():
     """Allows user to create closet"""
+
+    suitcase_name = request.form.get("suitcase-name")
+    destination = request.form.get("destination")
+    daterange = request.form.get("daterange")
+    notes = request.form.get("notes")
+    user_id = session.get('user_id')
+
+    new_suitcase = Suitcase(suitcase_name=suitcase_name, destination=destination, travel_dates=daterange, notes=notes, user_id=user_id)
+
+    db.session.add(new_suitcase)
+    db.session.commit()
+
 
     return redirect("/allsuitcases")
 
@@ -324,14 +358,28 @@ def add_suitcase_to_database():
 def all_suitcases():
     """User can see all suitcases"""
 
-    return render_template("suitcases.html")
+    user_id = session.get('user_id')
+
+    suitcases = Suitcase.query.filter_by(user_id=user_id).order_by(Suitcase.suitcase_name).all()
+
+    return render_template("suitcases.html",
+                           suitcases=suitcases)
 
 
-@app.route('/viewsuitcase', methods=['GET'])
-def view_suitcases():
-    """User can see all items in their suitcase"""
+@app.route('/viewsuitcase/<int:suitcase_id>', methods=['GET'])
+def view_suitcases(suitcase_id):
+    """User can see all items and suitcase information in their suitcase"""
 
-    return render_template("suitcases_view.html")
+    user_id = session.get('user_id')
+
+    suitcase = Suitcase.query.filter(Suitcase.suitcase_id == suitcase_id).one()
+
+    suitcase_items = Suitcase.query.filter(SuitcaseItem.suitcase_id == suitcase_id).all()
+
+
+    return render_template("suitcase_view.html",
+                           suitcase = suitcase,
+                           suitcase_items=suitcase_items)
 
 
 @app.route('/search', methods=['GET'])

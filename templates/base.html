@@ -7,67 +7,85 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Include Required Prerequisites -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+     
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Slab" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styles1.css" type='text/css'>
 </head>
 
 <body>
+<div id="wrapper">
+  <div id="header">
+    <div class="website-header">
+      <h1 class="base-header">CLOUD CLOSET</h1>
+      <p>Out of clutter, find simplicity...</p>
+    </div>
 
-<div class="website-header">
-  <h1 class="base-header">CLOUD CLOSET</h1>
-  <p>Out of clutter, find simplicity...</p>
-</div>
+    <nav class="navbar navbar-default" role="navigation">
+        <ul class="nav navbar-nav">
+          
+          <li><a href="/">Home</a></li>
 
-<nav class="navbar navbar-default" role="navigation">
-    <ul class="nav navbar-nav">
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Closets<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/createcloset">Create a Closet</a></li>
+              <li><a href="/closets">View Closets</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Items<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/allitems">View All Items</a></li>
+              <li><a href="/addItem">Add An Item</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Suitcase<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/addsuitcase">Start A Suitcase</a></li>
+              <li><a href="/allsuitcases">View All Suitcases</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/login"><span class="glyphicon glyphicon-user"></span> {{ session['user_id'] }}</a></li>
+              <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+            </ul>
+          </li>
       
-      <li><a href="/">Home</a></li>
+    </nav>
 
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Closets<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/createcloset">Create a Closet</a></li>
-          <li><a href="/closets">View Closets</a></li>
-        </ul>
-      </li>
 
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Items<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/allitems">View All Items</a></li>
-          <li><a href="/addItem">Add An Item</a></li>
-        </ul>
-      </li>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+               {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  </div>
 
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Suitcase<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/addsuitcase">Start A Suitcase</a></li>
-          <li><a href="/allsuitcases">View All Suitcases</a></li>
-        </ul>
-      </li>
+  <div id="content">
+    <div class="container-fluid">
+    {% block content %}
 
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Login<span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href="/login"><span class="glyphicon glyphicon-user"></span> {{ session['user_id'] }}</a></li>
-          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-        </ul>
-      </li>
-  
-</nav>
+    {% endblock %}
+    </div>
+  </div>
 
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-           {{ message }}
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+  <div id="footer">
+    <br>
+    <footer>Copyright © Noora Alkowni</footer>
+  </div>
 
-<div class="container-fluid">
-{% block content %}
-
-{% endblock %}
 </div>
-
-<footer>Copyright © Noora Alkowni</footer>
-
 </body>
 </html>

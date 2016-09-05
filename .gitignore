@@ -1,5 +1,4 @@
 .DS_Store
 venv
 *.pyc
-weatherapi.js
 secret.sh
