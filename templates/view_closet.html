@@ -1,22 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<style type="text/css">
-
-#weatherbar {
-    text-align: center;
-}
-
-.div-inline{
-    display:inline-block;
-}
-
-#filter-side-navbar {
-  background: #E5D0CC;
-}
-
-</style>
-
 <script type="text/javascript">
 $(function(){
     var searchItems = function(){
@@ -50,6 +34,8 @@ $(function(){
 
 </script>
 
+<script src="/static/add.js"></script>
+
 <div class="container-fluid">
  <div class="row">
   <nav class="col-sm-2 sidebar" id="filter-side-navbar">
@@ -80,6 +66,7 @@ $(function(){
     </nav><br>
 
   <div class="col-sm-10 main">
+
     <div id="weatherbar">
         <iframe src="http://cdnres.willyweather.com/widget/loadView.html?id=55936" width="850" height="92" frameborder="0" scrolling="no"></iframe>
         <a style="height: 92px;z-index: 1;margin: -92px 0 0 0;position: relative;float: right;text-indent: -9999em;width: 20px" href="http://www.willyweather.com/ca/san-francisco-county/san-francisco.html"></a>
@@ -88,20 +75,42 @@ $(function(){
     <h3>{{ closet.closet_name }}</h3> 
 
     {% for item in items %}
-        <div itemid="{{ item.item_id }}" class="closet_item">
-            <a href="/itemdetail/{{ item.item_id }}"><img src= "{{ item.image_filepath }}"></a>
-        </div>
+    <div itemid="{{ item.item_id }}" value="{{ item.item_id }}" name="item_id" class="closet_item">
 
+          <a href="/itemdetail/{{ item.item_id }}"><img width="300" src="{{ item.image_filepath }}"></a><br>
+
+          <div class="btn-group">
+
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+<br>Add to Suitcase <span class="caret"></span></button>
+          
+            <ul class="dropdown-menu">
+            
+              {% for suitcase in suitcases %}
+             
+              <li><button type="button" itemid="{{ item.item_id }}" suitcaseid='{{ suitcase.suitcase_id}}' value='{{ suitcase.suitcase_id}}' name="suitcase_id" class="btn btn-default add-to-suitcase-btn btn-xs">{{ suitcase.suitcase_name }}</button></li><br>              
+              {% endfor %}
+
+              <li role="separator" class="divider"></li>
+              <li><a href="/addsuitcase">New Suitcase</a></li>
+
+            </ul>
+
+          </div>
+
+           <button type="button" id="{{ item.item_id }}" class="btn btn-default btn-xs">+<br>Wear Today</button>
+    </div>
     {% endfor %}
 
 
-    <a href="/addItem" class="btn btn-default">+<br>Add Item to Closet!</a><br><br>
 
-    <div class="back-button">
-      <a href="/closets"><img alt="back button"src="/static/images/back.png"> Back to Closets...</a>
+    <a href="/addItem" class="btn btn-default">+<br>Add Item to Closet!</a><br><br>
     </div>
 
-  </div>
+    <div class="back-button">
+      <br><a href="/closets"><img alt="back button"src="/static/images/back.png"> Back to Closets...</a>
+    </div>
+
+  
 
   </div>
 </div>

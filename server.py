@@ -146,7 +146,7 @@ def closet_created():
 
     flash("%s Closet was added." % closet_name)
 
-    return redirect("/")
+    return redirect("/closets")
 
 
 @app.route('/closets')
@@ -174,14 +174,17 @@ def view_all_closet_items(closet_id):
 
     closet = Closet.query.filter(Closet.closet_id == closet_id).one()
 
+    suitcases = Suitcase.query.filter(Suitcase.user_id == user_id).all()
+
     # user clicked closet
     items = Item.query.filter((Item.closet_id == closet_id) & (Item.user_id == user_id)).all()
 
     return render_template("view_closet.html",
-                           items=items,
                            colors=colors,
                            categories=categories,
-                           closet=closet)
+                           closet=closet,
+                           suitcases=suitcases,
+                           items=items)
 
 
 @app.route('/addItem')
@@ -296,6 +299,7 @@ def view_all_items():
                            closets=closets,
                            suitcases=suitcases)
 
+
 @app.route('/add', methods=['POST'])
 def adding_to_suitcase_or_today():
     """Adding to a suitcase_items table or to wear today"""
@@ -305,7 +309,7 @@ def adding_to_suitcase_or_today():
     item_id = request.form.get("item_id")
 
     action = request.form.get("action")
-    
+  
     if action == "addToSuitcase":
         suitcase_item = SuitcaseItem(suitcase_id=suitcase_id, item_id=item_id)
         alert = "You have successfully added this  to your suitcase!"
@@ -316,8 +320,6 @@ def adding_to_suitcase_or_today():
         alert = "Action not allowed"
 
     return jsonify({'alert': alert})
-
-
 
 
 @app.route('/itemdetail/<int:item_id>', methods=['GET'])

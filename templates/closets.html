@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% for closet in closets %}
 <div class="closets-view">
-    {% for closet in closets %}
-        <p>
-          <a href="/viewcloset/{{ closet.closet_id }}"><img alt="Suitcase"src="/static/images/closet.jpg"><br>{{ closet.closet_name }}</a>
-        </p>
-      {% endfor %}
+    <p>
+        <a href="/viewcloset/{{ closet.closet_id }}"><img alt="Suitcase"src="/static/images/closet.jpg"><br>{{ closet.closet_name }}</a>
+    </p>
 </div>
- 
-    
+{% endfor %}
+
 {% endblock %}
