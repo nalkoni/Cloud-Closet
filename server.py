@@ -156,10 +156,11 @@ def all_closets():
     user_id = session.get('user_id')
 
     closets = Closet.query.filter_by(user_id=user_id).order_by(Closet.closet_name).all()
-
+    # import pdb; pdb.set_trace()
     return render_template("closets.html",
                            closets=closets)
     #in the templates im calling closets closets
+
 
 
 @app.route('/viewcloset/<int:closet_id>', methods=['GET'])
@@ -435,11 +436,12 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = True
+    app.debug = True # pragma: no cover
 
-    connect_to_db(app)
+    connect_to_db(app) # pragma: no cover
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
+    DebugToolbarExtension(app) # pragma: no cover
 
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0") # pragma: no cover
+

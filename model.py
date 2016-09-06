@@ -247,13 +247,12 @@ def sample_data():
     db.session.flush()
 
     #add sample data to above Classes(tables)
-    ct = Closet(closet_name='Travel', notes='travel closet')
-    cs = Closet(closet_name='Random', notes='random closet')
+    ct = Closet(closet_name='Travel', notes='travel closet', user_id=1)
+    cs = Closet(closet_name='Random', notes='random closet', user_id=1)
     db.session.flush()
 
     swt = Suitcase(suitcase_name='Work Trip', destination='Denver, CO', travel_dates='10/06/2016 - 10/13/2016', notes='Pack business casual', user_id=1)
     db.session.flush()
-
 
     idress = IType(type_name='Dress')
     itop = IType(type_name='Top')
@@ -290,8 +289,6 @@ def sample_data():
     sip = SuitcaseItem(suitcase_id=1, item_id=3)
     db.session.flush()
 
-
-
     db.session.add_all([un, ct, cs, swt, idress, itop, ipant, gf, icb, icf, sxs, sm, cb, cr, new_item_dress, new_item_top, new_item_pant, new_dress, new_top, new_pant, sid, sit, sip])
     db.session.commit()
 
@@ -299,7 +296,7 @@ def sample_data():
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app, db_uri="postgresql:///closets"):
+def connect_to_db(app, db_uri="postgresql:///testdb"):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
