@@ -28,6 +28,10 @@ body  {
     margin-bottom: 5px;
 }
 
+.start-closet {
+    text-align: center;
+}
+
 #weatherbar {
     text-align: center;
 }
@@ -61,6 +65,10 @@ body  {
     display: block;
     float: left;
     margin-right: 10px;
+    text-align: center;
+}
+
+.item-detail {
     text-align: center;
 }
 

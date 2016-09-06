@@ -243,10 +243,17 @@ class Pant(db.Model):
 def sample_data():
     """sample data for testing"""
 
+    un = User(first_name='Noora', last_name='Alkowni', email='test@gmail.com', password='test')
+    db.session.flush()
+
     #add sample data to above Classes(tables)
     ct = Closet(closet_name='Travel', notes='travel closet')
     cs = Closet(closet_name='Random', notes='random closet')
     db.session.flush()
+
+    swt = Suitcase(suitcase_name='Work Trip', destination='Denver, CO', travel_dates='10/06/2016 - 10/13/2016', notes='Pack business casual', user_id=1)
+    db.session.flush()
+
 
     idress = IType(type_name='Dress')
     itop = IType(type_name='Top')
@@ -268,9 +275,9 @@ def sample_data():
     cr = Color(color='red')
     db.session.flush()
 
-    new_item_dress = Item(i_type_id=1, closet_id=1,  notes='New dress, possibly for interview', i_category_id=1, size_id=1, color_id=1, image_filepath='/static/images/littleblackdress.jpg')
-    new_item_top = Item(i_type_id=2, closet_id=2, notes='New top, possibly for interview', i_category_id=2, size_id=2, color_id=2, image_filepath='/static/images/littleblackdress.jpg')
-    new_item_pant = Item(i_type_id=3, closet_id=1, notes='New pants, possibly for interview', i_category_id=1, size_id=1, color_id=1, image_filepath='/static/images/littleblackdress.jpg')
+    new_item_dress = Item(user_id=1, i_type_id=1, closet_id=1,  notes='New dress, possibly for interview', i_category_id=1, size_id=1, color_id=1, image_filepath='/static/images/littleblackdress.jpg')
+    new_item_top = Item(user_id=1, i_type_id=2, closet_id=2, notes='New top, possibly for interview', i_category_id=2, size_id=2, color_id=2, image_filepath='/static/images/littleblackdress.jpg')
+    new_item_pant = Item(user_id=1, i_type_id=3, closet_id=1, notes='New pants, possibly for interview', i_category_id=1, size_id=1, color_id=1, image_filepath='/static/images/littleblackdress.jpg')
     db.session.flush()
 
     new_dress = Dress(item_id=1)
@@ -278,7 +285,14 @@ def sample_data():
     new_pant = Pant(item_id=3)
     db.session.flush()
 
-    db.session.add_all([ct, cs, idress, itop, ipant, gf, icb, icf, sxs, sm, cb, cr, new_item_dress, new_item_top, new_item_pant, new_dress, new_top, new_pant])
+    sid = SuitcaseItem(suitcase_id=1, item_id=1)
+    sit = SuitcaseItem(suitcase_id=1, item_id=2)
+    sip = SuitcaseItem(suitcase_id=1, item_id=3)
+    db.session.flush()
+
+
+
+    db.session.add_all([un, ct, cs, swt, idress, itop, ipant, gf, icb, icf, sxs, sm, cb, cr, new_item_dress, new_item_top, new_item_pant, new_dress, new_top, new_pant, sid, sit, sip])
     db.session.commit()
 
 

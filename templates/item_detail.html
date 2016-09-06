@@ -1,20 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
+<script src="/static/add.js"></script>
+<div class="item-detail"
+    <!-- Thinking I need to do a if statement for each scenario  -->
+    <img src= "{{ item.image_filepath }}">
 
-<!-- Thinking I need to do a if statement for each scenario  -->
-<img src= "{{ item.image_filepath }}">
+    <p><strong>Size:</strong>{{ item.size.size }} </p>
 
-<p><strong>Size:</strong>{{ item.size.size }} </p>
+    <p><strong>Color:</strong> {{ item.color.color }} </p>
 
-<p><strong>Color:</strong> {{ item.color.color }} </p>
+    <p><strong>Catagory:</strong> {{ item.i_category.category_name }} </p>
 
-<p><strong>Catagory:</strong> {{ item.i_category.category_name }} </p>
+    <p><strong>Closet:</strong> {{ item.closet.closet_name }}</p>
 
-<p><strong>Closet:</strong> {{ item.closet.closet_name }}</p>
+    <p><strong>Notes:</strong> {{item.notes}}
 
-<p><strong>Notes:</strong> {{item.notes}}
+    <div class="btn-group">
 
-<!-- I need to pull the information to display it based on what the user clicks -->
+        <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+<br>Add to Suitcase <span class="caret"></span></button>
+              
+            <ul class="dropdown-menu">
+                
+                {% for suitcase in suitcases %}
+                <!--  <li><a href="#">{{ suitcase.suitcase_name }}</a></li> -->
+                    <li><button type="button" itemid="{{ item.item_id }}" suitcaseid='{{ suitcase.suitcase_id}}' value='{{ suitcase.suitcase_id}}' name="suitcase_id" class="btn btn-default add-to-suitcase-btn btn-xs">{{ suitcase.suitcase_name }}</button></li><br>              
+                {% endfor %}
+
+                <li role="separator" class="divider"></li>
+                
+                <li><a href="/addsuitcase">New Suitcase</a></li>
+              
+            </ul>
+
+    </div>
+
+         
+</div>
 
 {% endblock%}
 

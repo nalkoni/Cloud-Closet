@@ -86,7 +86,7 @@ $(function(){
       {% for item in items %}
       <div itemid="{{ item.item_id }}" value="{{ item.item_id }}" name="item_id" class="closet_item">
         
-        <a href="/itemdetail/{{ item.item_id }}"><img width="300" src= "{{ item.image_filepath }}"></a><br>
+        <a href="/itemdetail/{{ item.item_id }}"><img width="300" src= "{{ item.image_filepath }}"></a><br><br>
         
         <div class="btn-group">
 
@@ -105,7 +105,7 @@ $(function(){
 
         </div>
 
-        <button type="button" id="{{ item.item_id }}" class="btn btn-default btn-xs">+<br>Wear Today</button>
+        <button type="button" id="{{ item.item_id }}" class="btn btn-default btn-xs">+<br>Wear Today</button><br><br>
 
       </div>
       {% endfor %}

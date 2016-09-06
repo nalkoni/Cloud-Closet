@@ -16,9 +16,12 @@
 
 {% for suitcase_item in suitcase_items %}
 <div class="suitcase-items">
-  <p><img src='{{ suitcase_item.item.image_filepath }}' width=300><p>
+    <p><img src='{{ suitcase_item.item.image_filepath }}' width=300><p>
+    <button type="button" id="" class="btn btn-default btn-xs">+<br>Remove</button><br><br>
+
 </div>
 {% endfor %}
+
 
 
 <div class="back-button">

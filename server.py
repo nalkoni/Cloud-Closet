@@ -326,10 +326,15 @@ def adding_to_suitcase_or_today():
 def view_closet_item(item_id):
     """When user clicks closet item it displays more information"""
 
+    user_id = session.get('user_id')
+
     item = Item.query.get(item_id)
 
+    suitcases = Suitcase.query.filter(Suitcase.user_id == user_id).all()
+
     return render_template("item_detail.html",
-                           item=item)
+                           item=item,
+                           suitcases=suitcases)
 
 
 @app.route('/addsuitcase', methods=['GET'])
