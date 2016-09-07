@@ -33,9 +33,9 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 
 ##Technology Stack
 
-Application: Python, Flask, Jinja, SQLAlchemy, PostgreSQL
-APIs: WillyWeather
-Front-End: HTML/CSS, Bootstrap, JQuery, JavaScript, AJAX
+| **Application:** Python, Flask, Jinja, SQLAlchemy, PostgreSQL
+| **APIs:** WillyWeather
+| **Front-End:** HTML/CSS, Bootstrap, JQuery, JavaScript, AJAX
 
 
 ## Installation

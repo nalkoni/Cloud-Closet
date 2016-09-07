@@ -156,11 +156,10 @@ def all_closets():
     user_id = session.get('user_id')
 
     closets = Closet.query.filter_by(user_id=user_id).order_by(Closet.closet_name).all()
-    # import pdb; pdb.set_trace()
+
     return render_template("closets.html",
                            closets=closets)
     #in the templates im calling closets closets
-
 
 
 @app.route('/viewcloset/<int:closet_id>', methods=['GET'])
@@ -360,7 +359,6 @@ def add_suitcase_to_database():
     db.session.add(new_suitcase)
     db.session.commit()
 
-
     return redirect("/allsuitcases")
 
 
@@ -444,4 +442,3 @@ if __name__ == "__main__":
     DebugToolbarExtension(app) # pragma: no cover
 
     app.run(host="0.0.0.0") # pragma: no cover
-
