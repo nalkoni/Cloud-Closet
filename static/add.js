@@ -12,7 +12,7 @@ $(document).on('click', '.add-to-suitcase-btn', function(){
     $.ajax({
         type: "post",
         url: "http://localhost:5000/add",
-        data: {'suitcase_id': suitcaseId, 'item_id': itemId, 'action': 'addToToday'},
+        data: {'suitcase_id': suitcaseId, 'item_id': itemId, 'action': 'addToSuitcase'},
         })
     })
 
