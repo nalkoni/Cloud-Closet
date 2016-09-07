@@ -38,14 +38,65 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 - **Front-End:** HTML/CSS, Bootstrap, JQuery, JavaScript, AJAX
 
 
-## Installation
-Appointment App requires a requirements.txt file installation. Appointment App runs through the server.py file on http://localhost:5000/
+## How to Run Cloud Closet Locally
+
+Git Pull from https://github.com/nalkoni/Cloud-Closet
+
+
+Create and Activate a virtual environment 
+
+```
+> virtualenv venv
+> source venv/bin/activate
+```
+
+Install the dependencies
+
+```
+> pip install -r requirements.txt
+```
+
+Create the Database
+
+```
+> createdb closets
+```
+
+Run Seed and Model File
+
+```
+> python seed.py
+> python model.py
+```
+
+In Terminal run App
+```
+> python server.py
+```
+
+
+Open your browser and navigate to 
+
+```
+http://localhost:5000/
+```
+
+Note: From here you just use Cloud Closet like a user to play around.
+
 
 
 
 ## Testing
 
-Tests for Cloud Closet are located in tests.py. Cloud Closet offers 90% test coverage through unittests. Cloud closet testing tests the sessions for the login
+Tests for Cloud Closet are located in tests.py. Cloud Closet offers 90% test coverage through unittests.
+
+To run Tests 
+
+```
+> python tests.py
+```
+
+Happy Testing! 
 
 ![coverageHTML](/static/coverage.jpg?raw=true "Testing Coverage")
 
