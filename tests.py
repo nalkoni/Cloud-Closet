@@ -99,7 +99,7 @@ class FlaskTestsDatabase(TestCase):
         """Tests all closets page"""
 
         result = self.client.get("/viewcloset/1")
-        self.assertIn("Color:", result.data)
+        self.assertIn("Color", result.data)
 
     def test_add_item(self):
         """Tests the Upload Form Page"""
@@ -117,7 +117,7 @@ class FlaskTestsDatabase(TestCase):
         """Tests View all items page"""
 
         result = self.client.get("/allitems")
-        self.assertIn("All Items:", result.data)
+        self.assertIn("All Items", result.data)
 
     def test_item_detail(self):
         """Tests item detail page"""
