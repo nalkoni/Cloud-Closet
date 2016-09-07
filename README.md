@@ -7,24 +7,26 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 
 
 ##Screenshots:
+
+####Login:
 ![Login](/static/homepage.jpeg?raw=true "Login Page")
 
 ####User Registration: 
 ![User Registration](/static/homepage.jpeg?raw=true "User Registration Page")
 
-###Hompage:
+####Hompage:
 ![Homepage](/static/patientlogin.jpeg?raw=true "Homepage")
 
-###Add a Closet!:
+####Adding a Closet!:
 ![Add a closet](/static/onceuserloggedin.jpeg?raw=true "Adding a Closet")
 
-###Once a Closet Has Been Added to Database:
+####Once a Closet Has Been Added to Database:
 ![Add a closet](/static/onceuserloggedin.jpeg?raw=true "Once a Closet has been added to database")
 
-###Start Uploading into your Closets:
+####Start Uploading into your Closets:
 ![Uploading Items](/static/patientscheduleview.jpeg?raw=true"Uploading Items")
 
-###Once an Item has has Been added into 
+####Once an Item has has Been added into 
 ![Confirmed page](/static/confirmedpage.jpeg?raw=true "Confirmed page")
 
 
@@ -41,15 +43,9 @@ Appointment App requires a requirements.txt file installation. Appointment App r
 
 
 
-## Tests
+## Testing
 
-Tests for Cloud Closet are located in tests.py. Cloud Closet offers 90% test coverage through unittests. Cloud closet testing tests the sessions for the logins and the Testing covers assertions on all pages on Travel App, and ensures that when a user selects a city the correct city information is displayed in flight recommendations and event infomation. 
-
-Testing does not cover querying the database, hence the low percentage.
+Tests for Cloud Closet are located in tests.py. Cloud Closet offers 90% test coverage through unittests. Cloud closet testing tests the sessions for the login
 
 ![coverageHTML](/static/coverage.jpg?raw=true "Testing Coverage")
-
-## Tech Stack
-Python, Javascript, JQuery, Jinja, SQL, SQLAlchemy, D3, HTML, CSS, Coverage 
-
 
