@@ -13,7 +13,7 @@
   </div>
 
   <div class="form-group">
-    <label>Item Type:<br> 
+    <label>Item Type<br> 
       <select name="item_type">
         {% for item_type in item_types %}
           <option value= '{{ item_type.i_type_id  }}'> {{ item_type }} </option>
@@ -23,7 +23,7 @@
   </div> 
 
   <div class="form-group">
-    <label>Closet:<br> 
+    <label>Closet<br> 
       <select name="closet">
         {% for closet in closets %}
           <option value= '{{ closet.closet_id }}' > {{ closet }} </option>
@@ -33,7 +33,7 @@
   </div> 
 
   <div class="form-group">
-    <label>Select your Item Category:<br>
+    <label>Select your Item Category<br>
       <select name="category">
         {% for category in i_categories %}
           <option value= '{{ category.i_category_id }}' > {{ category }} </option>
@@ -43,7 +43,7 @@
   </div>
 
   <div class="form-group"> 
-    <label>Color:<br>
+    <label>Color<br>
       <select name="color">
         {% for color in colors %}
           <option value= '{{ color.color_id }}' > {{ color }} </option>
@@ -53,7 +53,7 @@
   </div>  
 
   <div class="form-group">
-    <label>Size:<br> 
+    <label>Size<br> 
       <select name="size">
         {% for size in sizes %}
           <option value= '{{ size.size_id }}' > {{ size }} </option>
@@ -63,12 +63,12 @@
   </div>
 
     <div class='form-group'>
-      <label>NOTES: <br>
+      <label>NOTES <br>
             <textarea name="notes" cols="50" rows="5" maxlength="250" placeholder="Max 250 characters"></textarea>
       </label>
     </div>
 
-      <input type=submit value=Upload>
+      <input type=submit value=Upload><br><br>
   </form>
 
 {% endblock %}

@@ -41,8 +41,10 @@ $(function(){
   <nav class="col-sm-2 sidebar" id="filter-side-navbar">
     <div class="navbar nav-sidebar">
 
+      <h3>Filter By</h3>
+
       <div class="form-group"> 
-          <label>Color:<br>
+          <label><h4>Color<h4>
             <select id="color_selector" name="color">
                 <option value="">Select Color</option>
               {% for color in colors %}
@@ -53,7 +55,7 @@ $(function(){
         </div>  
 
         <div class="form-group">
-          <label>Category:<br>
+          <label><h4>Category<h4>
             <select id="category_selector" name="category">
                 <option value="">Select Category</option>
               {% for category in categories %}
@@ -77,7 +79,7 @@ $(function(){
     {% for item in items %}
     <div itemid="{{ item.item_id }}" value="{{ item.item_id }}" name="item_id" class="closet_item">
 
-          <a href="/itemdetail/{{ item.item_id }}"><img width="300" src="{{ item.image_filepath }}"></a><br>
+          <a href="/itemdetail/{{ item.item_id }}"><img width="200" src="{{ item.image_filepath }}"></a><br>
 
           <div class="btn-group">
 
@@ -102,8 +104,9 @@ $(function(){
     {% endfor %}
 
 
-
-    <a href="/addItem" class="btn btn-default">+<br>Add Item to Closet!</a><br><br>
+      <div class="closet_item">
+        <img width="200" src="/static/images/add.jpg"><br><a href="/addItem" class="btn btn-default btn-xs">+<br>Add Item to Closet!</a><br><br>
+      </div>
     </div>
 
     <div class="back-button">

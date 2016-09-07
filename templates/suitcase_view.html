@@ -1,31 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="suitcase-view">
-    <h1><strong>Suitcase Name:</strong> {{ suitcase.suitcase_name }} </h1>
+<div class="row">
+    <div class="suitcase-view">
+        <h1><strong>Suitcase Name:</strong> {{ suitcase.suitcase_name }} </h1>
 
-    <h3><strong>Destination:</strong> {{ suitcase.destination }} </h3>
+        <h3><strong>Destination:</strong> {{ suitcase.destination }} </h3>
 
-    <h3><strong>Travel Dates:</strong> {{ suitcase.travel_dates }} </h3>
+        <h3><strong>Travel Dates:</strong> {{ suitcase.travel_dates }} </h3>
 
-    <h3><strong>Notes:</strong> {{ suitcase.notes }}</h3><br><br>
- 
-    <a href="/allitems" class="btn btn-default">+<br>Add Items to Suitcase!</a>
- </div><br><br>
+        <h3><strong>Notes:</strong> {{ suitcase.notes }}</h3><br><br>
+     
+        <a href="/allitems" class="btn btn-default">+<br>Add Items to Suitcase!</a>
+     </div><br><br>
 
 
-{% for suitcase_item in suitcase_items %}
-<div class="suitcase-items">
-    <p><img src='{{ suitcase_item.item.image_filepath }}' width=300><p>
-    <button type="button" id="" class="btn btn-default btn-xs">+<br>Remove</button><br><br>
+    {% for suitcase_item in suitcase_items %}
+    <div class="suitcase-items">
+        <p><img src='{{ suitcase_item.item.image_filepath }}' width=200><p>
+        <button type="button" id="" class="btn btn-default btn-xs">+<br>Remove</button><br><br>
 
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
 
 
-
-<div class="back-button">
-  <br><a href="/allsuitcases"><img alt="back button"src="/static/images/back.png"> Back to Suitcases...</a>
+<div class="row">
+    <div class="back-button">
+      <br><a href="/allsuitcases"><img alt="back button"src="/static/images/back.png"> Back to Suitcases...</a>
+    </div>
 </div>
 
 {% endblock %}

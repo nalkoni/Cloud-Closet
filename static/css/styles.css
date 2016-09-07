@@ -23,7 +23,7 @@ html,
 body {
   background: #efefef;
   padding: 10px;
-  font-family: 'Varela Round';
+  font-family: 'Raleway', sans-serif;
   text-align: center;
 }
 /*=== 2. Anchor Link ===*/
@@ -282,10 +282,10 @@ label:hover:before {
 }
 /*=== 9. Misc ===*/
 .logo {
-  padding: 15px 0;
-  font-size: 25px;
+  font-size: 40px;
   color: #aaaaaa;
   font-weight: bold;
+  font-family: 'Shadows Into Light', cursive;
 }
 
 /* ---------------------------END OF LOGIN STYLES---------------------------*/

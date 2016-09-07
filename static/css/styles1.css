@@ -1,19 +1,21 @@
 html,
 body  {
-    font-family: 'Josefin Slab', serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 20px;
     margin:0;
     padding:0;
     height:100%;
+    color: #5F6777;
 }
 
 .base-header {
-    font-family: 'Amatic SC', cursive;
+    font-family: 'Shadows Into Light', cursive;
     font-size: 70px;
 }
 
 .website-header {
     text-align: center;
+    color: #394C7D;
 }
 
 .suitcase-quote {
@@ -37,21 +39,24 @@ body  {
 }
 
 #filter-side-navbar {
-  background: #E5D0CC;
+  background: #394C7D;
+  color: #E7EDFB;
+  border-radius: 10px;
 }
 
 .closet_item { 
-    display: block;
-    float: left;
-    margin-right: 5px;
     text-align: center;
+    display: inline-block;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 10px;
 }
 
 .suitcases { 
-    display: block;
-    float: left;
-    margin-right: 5px;
     text-align: center;
+    display:inline-block;
+    margin:5px 20px;
+    padding:5px;
 }
 
 .suitcase-items {
@@ -62,10 +67,10 @@ body  {
 }
 
 .closets-view {
-    display: block;
-    float: left;
-    margin-right: 10px;
     text-align: center;
+    display:inline-block;
+    margin:5px 20px;
+    padding:5px;
 }
 
 .item-detail {
@@ -86,12 +91,14 @@ body  {
 }
 
 #footer {
-    background:#ededed;
+    background:#464E5E;
     width:100%;
     height:100px;
     position:absolute;
     bottom:0;
     left:0;
+    color: #E7EDFB;
+    text-align: center;
 }
 
 .suitcase-view {
@@ -123,6 +130,19 @@ li {
         display: inline-block;
     }
 }
+
+img {
+    border-radius: 5px;
+}
+
+/*--------------special CONTACT Rules------------*/
+#footer a img {
+    text-align: center;
+    display:inline-block;
+    margin:5px 20px;
+    padding:5px;
+}
+
 
 
 
