@@ -309,11 +309,11 @@ def adding_to_suitcase_or_today():
     item_id = request.form.get("item_id")
 
     action = request.form.get("action")
-  
+
     if action == "addToSuitcase":
         suitcase_item = SuitcaseItem(suitcase_id=suitcase_id, item_id=item_id)
         alert = "You have successfully added this  to your suitcase!"
-
+        print "got here"
         db.session.add(suitcase_item)
         db.session.commit()
     else:
@@ -346,7 +346,7 @@ def add_suitcase():
 
 @app.route('/addsuitcase', methods=['POST'])
 def add_suitcase_to_database():
-    """Allows user to create closet"""
+    """Send the suitcase to the database"""
 
     suitcase_name = request.form.get("suitcase-name")
     destination = request.form.get("destination")
@@ -386,7 +386,7 @@ def view_suitcases(suitcase_id):
 
     # suitcase = Suitcase.query.filter((Suitcase.suitcase_id == suitcase_id) & (Suitcase.user_id == user_id)).one()
 
-    suitcase_items = SuitcaseItem.query.filter(SuitcaseItem.suitcase_id == suitcase_id).all()
+    suitcase_items = SuitcaseItem.query.filter(SuitcaseItem.suitcase_id == suitcase).all()
 
     return render_template("suitcase_view.html",
                            suitcase=suitcase,
