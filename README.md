@@ -14,7 +14,7 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 ####User Registration 
 ![User Registration](/static/user_registration.jpg?raw=true "User Registration Page")
 
-####Hompage
+####Homepage
 ![Homepage](/static/images/homepage.png?raw=true "Homepage")
 
 ####Adding a Closet
@@ -24,7 +24,7 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 ![Add a closet](/static/allclosets.jpeg?raw=true "Once a Closet has been added to database")
 
 ####Start Uploading into your Closets
-![Uploading Items](/static/images/itemupload.png?raw=true"Uploading Items")
+![Uploading Items](/static/images/itemupload.jpeg?raw=true"Uploading Items")
 
 ####View All Items
 ![All Items page](/static/allitems.jpeg?raw=true "All Items page")
