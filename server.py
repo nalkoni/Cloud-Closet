@@ -191,8 +191,9 @@ def view_all_closet_items(closet_id):
 def upload_file():
     """Form to enter item into closet"""
 
+    user_id = session.get('user_id')
     colors = Color.query.order_by('color').all()
-    closets = Closet.query.order_by('closet_name').all()
+    closets = Closet.query.filter(Closet.user_id == user_id).all()
     i_categories = ICategory.query.order_by('category_name').all()
     item_types = IType.query.order_by('type_name').all()
     sizes = Size.query.filter(Size.gender_id == 2).all()
@@ -288,9 +289,9 @@ def view_all_items():
 
     suitcases = Suitcase.query.filter(Suitcase.user_id == user_id).all()
 
-    closets = Closet.query.filter(Closet.user_id == user_id).all()
+    closets = Closet.query.filter_by(user_id=user_id).all()
 
-    items = Item.query.filter(User.user_id == user_id).all()
+    items = Item.query.filter(Item.user_id == user_id).all()
 
     return render_template("view_all_items.html",
                            items=items,
@@ -386,7 +387,7 @@ def view_suitcases(suitcase_id):
 
     # suitcase = Suitcase.query.filter((Suitcase.suitcase_id == suitcase_id) & (Suitcase.user_id == user_id)).one()
 
-    suitcase_items = SuitcaseItem.query.filter(SuitcaseItem.suitcase_id == suitcase).all()
+    suitcase_items = SuitcaseItem.query.filter(SuitcaseItem.suitcase_id == suitcase.suitcase_id).all()
 
     return render_template("suitcase_view.html",
                            suitcase=suitcase,

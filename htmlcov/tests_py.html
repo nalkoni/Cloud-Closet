@@ -382,7 +382,7 @@
 <p id="t99" class="pln">        <span class="str">"""Tests all closets page"""</span><span class="strut">&nbsp;</span></p>
 <p id="t100" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t101" class="stm run hide_run">        <span class="nam">result</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">client</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"/viewcloset/1"</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t102" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertIn</span><span class="op">(</span><span class="str">"Color:"</span><span class="op">,</span> <span class="nam">result</span><span class="op">.</span><span class="nam">data</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t102" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertIn</span><span class="op">(</span><span class="str">"Color"</span><span class="op">,</span> <span class="nam">result</span><span class="op">.</span><span class="nam">data</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t103" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t104" class="stm run hide_run">    <span class="key">def</span> <span class="nam">test_add_item</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t105" class="pln">        <span class="str">"""Tests the Upload Form Page"""</span><span class="strut">&nbsp;</span></p>
@@ -400,7 +400,7 @@
 <p id="t117" class="pln">        <span class="str">"""Tests View all items page"""</span><span class="strut">&nbsp;</span></p>
 <p id="t118" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t119" class="stm run hide_run">        <span class="nam">result</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">client</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"/allitems"</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t120" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertIn</span><span class="op">(</span><span class="str">"All Items:"</span><span class="op">,</span> <span class="nam">result</span><span class="op">.</span><span class="nam">data</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t120" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertIn</span><span class="op">(</span><span class="str">"All Items"</span><span class="op">,</span> <span class="nam">result</span><span class="op">.</span><span class="nam">data</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t121" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t122" class="stm run hide_run">    <span class="key">def</span> <span class="nam">test_item_detail</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t123" class="pln">        <span class="str">"""Tests item detail page"""</span><span class="strut">&nbsp;</span></p>
@@ -502,7 +502,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.2</a>,
-            created at 2016-09-06 21:59
+            created at 2016-09-07 16:27
         </p>
     </div>
 </div>
