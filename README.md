@@ -1,4 +1,4 @@
-# Cloud Closet
+# Cloud <img src="/static/images/cloud_closet_logo.png"> Closet
 
 ####Homepage
 <img src="/static/images/homepage.png">
@@ -17,39 +17,47 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 
 ##Screenshots
 
-####Login
+###Login
 <img src="/static/images/login.png">
 
-####User Registration 
+
+###User Registration 
 <img src="/static/images/register.png">
 
-####Adding a Closet
+
+###Adding a Closet
 <img src="/static/images/add_closet.png">
 
-####All Closets
+
+###All Closets
 <img src="/static/images/closets.png">
 
-####Start Uploading into your Closets by adding an Item
+
+###Start Uploading into your Closets by adding an Item
 <img src="/static/images/add_item.png">
 
-####View All Items
-#####Male Closet
+
+###View All Items
+-####Male Closet
 <img src="/static/images/m_view_all_items.png">
-#####Female Closet
+-####Female Closet
 <img src="/static/images/f_view_items.png">
 
-####Add A Suitcase
+
+###Add A Suitcase
 <img src="/static/images/start_suitcase.png">
 
-####All Suitcases
+
+###All Suitcases
 <img src="/static/images/all_suitcases.png">
 
-####Looking inside a suitcase
 
--#####Male Suitcase
+###Looking inside a suitcase
+
+-####Male Suitcase
 <img src="/static/images/m_suitcase.png">
 
--#####Female Suitcase
+-####Female Suitcase
 <img src="/static/images/f_suitcase.png">
 
 
@@ -78,7 +86,7 @@ To run Tests
 
 ## How to Run Cloud Closet Locally
 
-Git Pull from https://github.com/nalkoni/Cloud-Closet
+Git Pull/Fork from https://github.com/nalkoni/Cloud-Closet
 
 
 Create and Activate a virtual environment 
