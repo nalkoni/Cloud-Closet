@@ -435,11 +435,11 @@ if __name__ == "__main__":
     # that we invoke the DebugToolbarExtension
 
     # Do not debug for demo
-    app.debug = True # pragma: no cover
+    # app.debug = True # pragma: no cover
 
     connect_to_db(app) # pragma: no cover
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app) # pragma: no cover
+    # DebugToolbarExtension(app) # pragma: no cover
 
     app.run(host="0.0.0.0") # pragma: no cover
