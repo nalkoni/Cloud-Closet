@@ -38,9 +38,10 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 
 
 ###View All Items
--####Male Closet
+- ####Male Closet
 <img src="/static/images/m_view_all_items.png">
--####Female Closet
+
+- ####Female Closet
 <img src="/static/images/f_view_items.png">
 
 
@@ -54,10 +55,10 @@ Gone the days of the closet monster. Say hello to Cloud Closet, a web applicatio
 
 ###Looking inside a suitcase
 
--####Male Suitcase
+- ####Male Suitcase
 <img src="/static/images/m_suitcase.png">
 
--####Female Suitcase
+- ####Female Suitcase
 <img src="/static/images/f_suitcase.png">
 
 
