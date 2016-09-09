@@ -135,6 +135,6 @@ Note: From here you just use Cloud Closet like a user to play around.
 
 ### About the Developer    
 Noora Alkowni       
-[Linkedin](https://www.linkedin.com/in/nooraalkoni)    
+[Linkedin](https://www.linkedin.com/in/noora-alkoni)    
  
 
