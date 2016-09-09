@@ -1,4 +1,4 @@
-# Cloud <img width=100 src="/static/images/cloud_closet_logo.png"> Closet
+# Cloud Closet
 
 ####Homepage
 <img src="/static/images/homepage.png">
